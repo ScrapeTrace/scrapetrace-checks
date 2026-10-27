@@ -1,0 +1,49 @@
+{
+  "source": "/home/logesh-17032/.codex/.chatgpt-projects/g-p-6abcafc9e41081919045872a0a3eb8a7/browser-checks",
+  "files": [
+    {
+      "file": "build.mjs",
+      "sha256": "7b55c6cf6b1ee828fa00ee4ae66fe731f02d20a6cb07c3c73f7db762cb0bbeee"
+    },
+    {
+      "file": "client.js",
+      "sha256": "bcd7658682334bd063b8e2a4a2e7cfc5bba60e9ab13310cbfadb62ba392526a0"
+    },
+    {
+      "file": "cpu-workload.js",
+      "sha256": "27ad486df1094afdde003e67b6801603a4d9f56a5c06c171574e7a53c1072728"
+    },
+    {
+      "file": "workload.js",
+      "sha256": "1f7ab253fdf0cb018fec1ab82576f5a38baa8d99c4266b645a146ba611f71873"
+    },
+    {
+      "file": "page.html",
+      "sha256": "01ac6c95b8087efee23f6712da267f73bee2b1256ccb9c203212bd91214906d6"
+    },
+    {
+      "file": "style.css",
+      "sha256": "ff511352edf57e79f404366c132f3c238a400295fa8fef2f0ca3fec4b438a880"
+    },
+    {
+      "file": "README.md",
+      "sha256": "3079183bbd9069d6df4acf0c7c59b5113212b5621b50417466f6f45c083eee68"
+    },
+    {
+      "file": "package.json",
+      "sha256": "f73ec7916b21d8f37727e3c6441a5fc59231099538338905d173bbcb25f7ec9b"
+    },
+    {
+      "file": "deployment.json",
+      "sha256": "3629dd87508a0278ab9f308d02829085a15c983ca7314eb7117aff2b9979e6b6"
+    },
+    {
+      "file": "dist/_worker.js",
+      "sha256": "c641dafda52c788a7af6c6803ae97fbb09f70a12eb43cb0610177b2c6a644b9b"
+    },
+    {
+      "file": "dist/_routes.json",
+      "sha256": "1301eaf7b0e8272b5bb4575abcfbd2cffde53af2c6ea4d77a5ec78919a5a2daa"
+    }
+  ]
+}

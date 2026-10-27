@@ -1,0 +1,19 @@
+{
+  "platform": "Cloudflare Pages",
+  "project": "scrapetrace-checks",
+  "url": "https://scrapetrace-checks.pages.dev",
+  "batteryURL": "https://scrapetrace-checks.pages.dev/battery",
+  "deploymentID": "351dcd59-bf3f-4a6f-a844-d7e92a4e3883",
+  "deploymentURL": "https://351dcd59.scrapetrace-checks.pages.dev",
+  "status": "success",
+  "compatibilityDate": "2026-10-19",
+  "completionSelector": "#probe-complete",
+  "networkGateRequests": 3,
+  "navigationWaitModes": [
+    "domcontentloaded",
+    "load",
+    "networkidle0",
+    "networkidle2"
+  ],
+  "workloadURL": "https://scrapetrace-checks.pages.dev/battery/workload"
+}

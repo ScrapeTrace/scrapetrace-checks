@@ -1,0 +1,14 @@
+{
+  "id": 1435556428,
+  "full_name": "ScrapeTrace/scrapetrace-checks",
+  "html_url": "https://github.com/ScrapeTrace/scrapetrace-checks",
+  "private": false,
+  "default_branch": "main",
+  "permissions": {
+    "admin": true,
+    "maintain": true,
+    "push": true,
+    "triage": true,
+    "pull": true
+  }
+}

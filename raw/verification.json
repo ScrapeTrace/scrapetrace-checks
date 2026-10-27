@@ -1,0 +1,26 @@
+{
+  "checks": [
+    "preserved HEAD /battery",
+    "preserved HEAD /battery/workload",
+    "preserved HEAD /environment",
+    "preserved HEAD /cpu-workload.js",
+    "preserved HEAD /realm",
+    "preserved HEAD /unknown",
+    "preserved body /battery?seconds=5",
+    "preserved body /battery/workload?phaseSeconds=5",
+    "preserved body /environment",
+    "preserved body /cpu-workload.js",
+    "preserved body /realm",
+    "no automatic measurement",
+    "real transactions, raw commits, awaited cleanup",
+    "missing API abstains",
+    "unrecognized durability abstains and cleans",
+    "write failure abstains and cleans",
+    "mobile viewport fits",
+    "no page errors",
+    "battery real browser load completion"
+  ],
+  "passed": 19,
+  "timestamp": "2026-10-27T10:08:35.582Z",
+  "profileCleanup": "removed"
+}

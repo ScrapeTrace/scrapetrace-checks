@@ -1,0 +1,30 @@
+[
+  {
+    "url": "https://scrapetrace-checks.pages.dev/battery?seconds=5",
+    "status": 200,
+    "bytes": 27182,
+    "sha256": "238e70ed450201fe8bba3560a30c5a3b5920ee2a047adcef1591984e81d42dbe",
+    "csp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src 'self'; connect-src 'self'; worker-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'self'"
+  },
+  {
+    "url": "https://27373db7.scrapetrace-checks.pages.dev/battery?seconds=5",
+    "status": 200,
+    "bytes": 27182,
+    "sha256": "5df0e01ada0b1c0db4deb1d6f6037188da66c1158c0be687eed4027ae4a2b59d",
+    "csp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src 'self'; connect-src 'self'; worker-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'self'"
+  },
+  {
+    "url": "https://27373db7.scrapetrace-checks.pages.dev/incognito",
+    "status": 200,
+    "bytes": 4383,
+    "sha256": "7cd8c4f126ae9c8bdbd4845b3966a3a8c2519c0572de192f1c7d86965d72c019",
+    "csp": "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+  },
+  {
+    "url": "https://27373db7.scrapetrace-checks.pages.dev/incognito/durability.js",
+    "status": 200,
+    "bytes": 8394,
+    "sha256": "7b7c9d4e1aa904ed4767d1f506c21c84bf8c5cfc6089d4e2f9387887bc009ace",
+    "csp": "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+  }
+]

@@ -1,0 +1,4 @@
+{
+  "normalization": "generated per-request UUID only",
+  "baselineVsPreviewMatch": true
+}

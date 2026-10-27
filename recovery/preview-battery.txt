@@ -1,0 +1,149 @@
+<!doctype html><html lang="en" data-probe-ready="false"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Browser evidence tools. Inspect battery reporting, observe discharge and review environment signals with honest, reproducible results."><title>Battery integrity · Browser Checks</title><style>:root{color-scheme:dark;--bg:#0b1010;--panel:#111919;--line:#263434;--muted:#9aafaa;--ink:#eaf4ef;--mint:#b5f5c7}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,sans-serif}a{color:inherit;text-decoration:none}a:hover{color:var(--mint)}button,select{font:inherit}button,.button{border:1px solid var(--mint);border-radius:6px;background:var(--mint);color:#102117;padding:10px 18px;cursor:pointer;font-weight:650}button:disabled{opacity:.4;cursor:default}.secondary,select{background:transparent;color:var(--ink);border:1px solid var(--line);padding:10px 14px;border-radius:6px}header{border-bottom:1px solid var(--line)}nav{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:23px 30px}.brand{font-weight:750;font-size:17px;letter-spacing:-.5px}.mark{color:var(--mint);margin-right:10px}nav .links{display:flex;gap:28px;color:var(--muted);font-size:13px}main{max-width:1200px;margin:auto;padding:54px 30px 90px}.eyebrow{font:11px/1.5 ui-monospace,monospace;letter-spacing:2px;color:var(--mint);text-transform:uppercase}h1{font-size:clamp(34px,5vw,60px);font-weight:500;letter-spacing:-2.7px;line-height:1.08;margin:17px 0 20px;max-width:850px}h2{font-size:21px;letter-spacing:-.5px;font-weight:550;margin:0}h3{font-size:17px;font-weight:550}p{color:var(--muted);max-width:780px}.intro{max-width:710px;font-size:17px}.top{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:35px}.pill{display:inline-flex;align-items:center;gap:8px;font:11px ui-monospace,monospace;color:var(--mint);padding:7px 10px;border:1px solid #35543d;border-radius:30px}.dot{width:6px;height:6px;border-radius:50%;background:var(--mint)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:27px}.card{display:flex;flex-direction:column;min-height:285px}.card.featured{background:linear-gradient(135deg,#182b22,#111919);border-color:#486b50}.card .num{font:12px ui-monospace,monospace;color:var(--muted)}.card h2{margin-top:34px}.card p{font-size:14px}.card .go{margin-top:auto;color:var(--mint)}.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:30px 0}label{font-size:13px;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:24px 0}.stat{background:var(--panel);padding:22px}.stat span{font:10px ui-monospace,monospace;color:var(--muted);letter-spacing:1px}.stat strong{display:block;font-size:32px;font-weight:500;margin-top:8px;letter-spacing:-1px}.stat small{color:var(--muted);font-size:11px}.grid{display:grid;grid-template-columns:1fr 1.9fr;gap:20px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:38px 0 18px}.battery{height:76px;border:2px solid #486350;border-radius:10px;padding:6px;position:relative;margin:22px 14px 20px 0}.battery:after{content:'';position:absolute;right:-10px;top:22px;width:6px;height:25px;background:#486350;border-radius:0 3px 3px 0}.battery>div{height:100%;background:var(--mint);border-radius:4px;min-width:2px}.meter-title{display:flex;justify-content:space-between;align-items:center}.big{font-size:32px;letter-spacing:-1px}dl{margin:18px 0 0;font-size:12px}dl>div{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding:10px 0}dt{color:var(--muted)}dd{margin:0}svg.chart{display:block;width:100%;height:150px;margin-top:12px}figcaption{font:11px ui-monospace,monospace;color:var(--muted)}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:8px}table{border-collapse:collapse;width:100%;font-size:13px}th{text-align:left;font:10px ui-monospace,monospace;color:var(--muted);letter-spacing:1px;background:#14201b}th,td{padding:16px 20px;border-bottom:1px solid var(--line);vertical-align:top}td:first-child{width:21%;min-width:160px}td:nth-child(2){font:11px ui-monospace,monospace;color:var(--mint);width:130px}td:last-child{color:var(--muted)}tr:last-child td{border:0}.notice{border-left:2px solid #6e9b76;padding:2px 0 2px 20px;margin:30px 0;color:var(--muted);font-size:13px}.notice strong{color:var(--ink)}details{margin-top:15px;border:1px solid var(--line);border-radius:7px;padding:18px}summary{cursor:pointer}pre{white-space:pre-wrap;word-break:break-word;font:12px/1.6 ui-monospace,monospace;color:var(--muted);max-height:450px;overflow:auto}.sources a{text-decoration:underline;text-underline-offset:4px;margin-right:20px;font-size:13px}.pending{border:1px solid var(--line);border-radius:10px;padding:35px;background:var(--panel);margin-top:30px}.pending strong{font-size:20px;font-weight:500}progress{width:100%;accent-color:var(--mint);height:7px;margin-top:25px}.pending small{display:block;color:var(--muted);margin-top:12px}footer{border-top:1px solid var(--line);padding:24px 30px;color:var(--muted);font:11px ui-monospace,monospace;display:flex;justify-content:space-between;gap:20px}#verdict{font-size:22px;letter-spacing:-.5px}#verdict[data-tone=warn]{color:#ffcc8d}[hidden]{display:none!important}@media(max-width:760px){nav{padding:20px}.links a:last-child{display:none}main{padding:36px 20px 60px}.top{display:block}.top>.pill{margin-top:12px}.cards,.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.card{min-height:240px}h1{letter-spacing:-1.5px}td,th{padding:12px}footer{flex-direction:column}.panel{padding:20px}}
+</style></head><body><header><nav><a class="brand" href="/"><span class="mark">▣</span>SCRAPETRACE <span style="font-weight:400;color:var(--muted)">/ checks</span></a><div class="links"><a href="/">All tools</a><a href="/battery">Battery</a><a href="/environment">Environment</a></div></nav></header><main><div class="top"><div><div class="eyebrow">Tool / 01 — POWER</div><h1>Put the battery story<br>to the test.</h1><p class="intro">A battery percentage is just a claim. Inspect the API, compare contexts, and observe what the reported charge does over time.</p></div><span class="pill"><span class="dot"></span> PASSIVE TEST · NO STRESS LOAD</span></div><form class="toolbar" method="get"><label for="seconds">Observation window</label><select name="seconds" id="seconds"><option value="5" selected>5 seconds</option><option value="12">12 seconds</option><option value="30">30 seconds</option><option value="60">60 seconds</option><option value="120">120 seconds</option></select><button type="submit">Run again ↗</button><button id="export" class="secondary" type="button" disabled>Export JSON ↓</button><a class="secondary" href="#methodology">How it works</a></form><section id="pending" class="pending" aria-live="polite"><strong>Collecting browser evidence…</strong><p>Results will appear together when this observation completes. Document load is held until the report is ready.</p><progress id="progress" value="0" max="100" aria-label="Observation progress"></progress><small id="remaining">Preparing observation…</small></section><noscript><section class="notice"><strong>Not executed: JavaScript is disabled.</strong><p>Battery and environment readings require a browser with JavaScript. This response contains no measured battery evidence.</p></section><style>#pending{display:none}</style></noscript><section id="results" hidden><div class="section-title"><h2 id="verdict">Report</h2><span class="pill">OBSERVATION COMPLETE</span></div><div class="stats"><div class="stat"><span>REPORTED LEVEL</span><strong id="battery-level">—</strong><small id="battery-state">No reading</small></div><div class="stat"><span>BATTERY SAMPLES</span><strong id="sample-count">0</strong><small>polling + change events</small></div><div class="stat"><span>ELAPSED</span><strong id="duration">—</strong><small>actual browser observation</small></div><div class="stat"><span>REVIEW ITEMS</span><strong id="findings-count">0</strong><small>signals, not a fraud score</small></div></div><div class="grid"><section class="panel"><div class="eyebrow">Battery snapshot</div><div class="battery" role="img" aria-label="Reported battery level"><div id="battery-fill" style="width:0"></div></div><dl><div><dt>Time to full</dt><dd id="charge-time">—</dd></div><div><dt>Time to empty</dt><dd id="discharge-time">—</dd></div><div><dt>Physical hardware</dt><dd>Not verifiable</dd></div></dl></section><section class="panel"><h2>Reported charge over time</h2><p style="font-size:12px">Samples across the observation. A flat trace is inconclusive.</p><svg class="chart" viewBox="0 0 700 140" role="img" aria-label="Battery level across the observation"><path d="M16 25H684M16 70H684M16 115H684" stroke="#263a30" stroke-dasharray="4 5"/><polyline id="trace" fill="none" stroke="#b5f5c7" stroke-width="2.5" points=""/></svg><figcaption id="trace-caption">No battery samples available.</figcaption></section></div><div class="section-title"><h2>Evidence & checks</h2><span class="eyebrow">Inspectable, not a black box</span></div><div class="table-wrap"><table><thead><tr><th>CHECK</th><th>OUTCOME</th><th>EVIDENCE</th></tr></thead><tbody id="checks"></tbody></table></div><details><summary>Browser environment</summary><pre id="environment"></pre></details><details><summary>Raw report JSON</summary><pre id="report-json"></pre></details></section><div class="notice"><strong>Evidence, with limits.</strong><br>A webpage cannot prove that a battery is physical or rule out sophisticated spoofing. A changing reading can be simulated. Unchanged readings, unsupported APIs and privacy defaults are inconclusive.</div><details id="methodology"><summary>Methodology & sources</summary><p>We inspect value ranges and charging/time relationships, repeated object identity, the exposed API surface, a fresh same-origin iframe, battery events, and passive time-series samples. We do not drain the battery with artificial CPU or GPU work. To gather stronger behavioral evidence, unplug your device, keep the tab visible and use a longer observation. Battery estimates are approximate and browsers may round or obfuscate values.</p><p>The default 100%, charging, 0 seconds to full and infinite discharge time can represent a full battery, absent hardware or unavailable information. Native-looking APIs and matching realms are weak evidence. Automation disclosure is reported separately.</p><p>Reports stay in memory and are replaced on reload. Cloudflare receives ordinary page requests and temporary network gates; browser readings are not uploaded. Without JavaScript, checks do not execute. A load-blocking finalizer holds DOMContentLoaded and load until the report is ready. Three pending fetches prevent networkidle0/networkidle2 from settling before load and report completion. For selector waits, use <code>#probe-complete</code>. Choose a navigation timeout longer than the observation plus 10 seconds.</p><div class="sources"><a href="https://www.w3.org/TR/battery-status/">W3C Battery Status API ↗</a><a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getBattery">API access & compatibility ↗</a><a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/webdriver">Automation disclosure ↗</a></div></details></main><footer><span>SCRAPETRACE / BROWSER EVIDENCE LAB</span><span>No analytics. Browser readings stay in this tab unless you export them.</span></footer><script id="config" type="application/json">{"kind":"battery","seconds":5,"gateMs":8500,"workload":false,"phaseSeconds":30,"runId":"d3f6681e-f1f5-483b-a90f-c64f5f59471a"}</script><script>(() => {
+'use strict';
+const config = JSON.parse(document.getElementById('config').textContent);
+const start = performance.now(), rows = [], samples = [], events = [], listeners = [];
+let workload=null;
+let battery, frame, ticker, done = false, acquisition = 'pending', realm = null, identity = null, integrity = null, error = null;
+const $ = id => document.getElementById(id);
+// Fetches do not block load, so they can remain pending until load actually fires.
+// Three active requests also prevent a networkidle2 observer from returning early.
+const networkGateControllers=[];
+window.__NETWORK_GATE__={started:0,released:false,reason:null};
+for(let slot=0;slot<3;slot++) {
+ const controller=new AbortController();networkGateControllers.push(controller);
+ window.__NETWORK_GATE__.started++;
+ void fetch(`/api/network-gate?run=${encodeURIComponent(config.runId)}&slot=${slot}&ms=${config.gateMs+15000}`,{signal:controller.signal,cache:'no-store'})
+  .then(response=>{if(!response.ok)throw new Error('Network gate unavailable');return response.text();})
+  .catch(error=>{if(error.name!=='AbortError'){window.__NETWORK_GATE__.error=String(error);}});
+}
+function releaseNetworkGate() {
+ if(window.__NETWORK_GATE__.released)return;
+ window.__NETWORK_GATE__.released=true;window.__NETWORK_GATE__.reason='page-loaded-and-test-complete';
+ for(const controller of networkGateControllers)controller.abort();
+}
+
+const elapsed = () => Math.round(performance.now() - start);
+const safe = v => v === Infinity ? 'Infinity' : Number.isNaN(v) ? 'NaN' : v === -Infinity ? '-Infinity' : v;
+const snapshot = b => ({level:safe(b.level),charging:b.charging,chargingTime:safe(b.chargingTime),dischargingTime:safe(b.dischargingTime)});
+const add = (name,status,detail) => rows.push({name,status,detail});
+const env = {userAgent:navigator.userAgent,platform:navigator.platform,languages:[...navigator.languages],webdriver:navigator.webdriver,hardwareConcurrency:navigator.hardwareConcurrency,deviceMemory:navigator.deviceMemory ?? null,secureContext:isSecureContext,visibility:document.visibilityState,screen:{width:screen.width,height:screen.height,pixelRatio:devicePixelRatio},timezone:Intl.DateTimeFormat().resolvedOptions().timeZone};
+function sample(reason) { if(!battery || done)return; try {samples.push({ms:elapsed(),reason,...(config.workload?{phase:workload?.phase()||'baseline'}:{}),visibility:document.visibilityState,...snapshot(battery)});}catch(e){error=String(e);}}
+function cell(row,value) {const td=document.createElement('td');td.textContent=value;row.append(td);}
+function time(v) {return v === 'Infinity' ? 'Unknown / unlimited' : typeof v === 'number' ? `${Math.round(v)} s` : String(v ?? 'Unavailable');}
+function assess() {
+ if(config.kind === 'environment') {
+  add('Secure context',env.secureContext?'consistent':'review',String(env.secureContext));
+  add('Automation disclosure',env.webdriver?'observed':'inconclusive',env.webdriver?'navigator.webdriver is true. Automation is disclosed; this is not proof of an emulator.':'No automation disclosure. This does not rule out automation.');
+  add('Battery API exposure',typeof navigator.getBattery === 'function'?'observed':'unsupported','API exposure depends on browser, policy and secure context.');
+  add('Display and touch','observed',`${screen.width} × ${screen.height}, ${navigator.maxTouchPoints} touch points. These values can be emulated.`);
+  return 'Environment recorded';
+ }
+ add('Battery API access',acquisition==='available'?'consistent':acquisition, error || (acquisition==='available'?'BatteryManager resolved.':'No battery readings available. Unsupported or blocked access is not evidence of spoofing.'));
+ if(!samples.length) return acquisition==='available'?'Inconclusive':'Battery unavailable';
+ const a=samples[0], z=samples.at(-1);
+ const malformed=samples.some(s=>typeof s.level!=='number'||!Number.isFinite(s.level)||s.level<0||s.level>1||typeof s.charging!=='boolean'||![s.chargingTime,s.dischargingTime].every(t=>t==='Infinity'||(typeof t==='number'&&Number.isFinite(t)&&t>=0)));
+ add('Value ranges',malformed?'suspicious':'consistent',malformed?'At least one reading violates the BatteryManager value contract.':'Level, state and time estimates have valid types and ranges.');
+ const contradiction=samples.some(s=>(s.charging&&s.dischargingTime!=='Infinity')||(!s.charging&&s.chargingTime!=='Infinity')||(s.level===1&&s.chargingTime!==0));
+ add('State consistency',contradiction?'suspicious':'consistent',contradiction?'Charging state and time estimates contradict the published API contract. Browser bugs or overrides are possible.':'Charging state and time estimates agree with the API contract.');
+ const defaults=samples.every(s=>s.level===1&&s.charging&&s.chargingTime===0&&s.dischargingTime==='Infinity');
+ add('Default battery signature',defaults?'inconclusive':'observed',defaults?'Fully charged / plugged in is also the specified fallback for unavailable battery information or no battery.':'Readings differ from the API fallback signature. This does not prove physical hardware.');
+ add('Repeated access',identity===true?'consistent':identity===false?'review':'inconclusive',identity===true?'Repeated calls returned the same promise and BatteryManager.':identity===false?'Repeated calls did not preserve expected identity. Review overrides or browser differences.':'Identity check could not complete.');
+ add('API surface',integrity?.nativeLike?'consistent':'review',integrity?JSON.stringify(integrity):'API inspection did not complete. Native-looking functions can still be spoofed.');
+ if(realm?.snapshot){const r=realm.snapshot; const mismatch=typeof r.level!=='number'||Math.abs(r.level-z.level)>.02||r.charging!==z.charging;
+ add('Fresh iframe comparison',mismatch?'review':'consistent',mismatch?'Fresh iframe and main document differ; a genuine state transition during capture is also possible.':'Fresh iframe agrees within 2 percentage points. Both realms may still be overridden.');}
+ else add('Fresh iframe comparison','inconclusive',realm?.error||'Fresh iframe did not return battery evidence within the acquisition budget.');
+ const delta=z.level-a.level, uninterrupted=samples.every(s=>s.charging===false)&&!events.some(e=>e.type==='chargingchange');
+ const down=typeof delta==='number'&&delta<0&&uninterrupted;
+ add('Observed discharge',down?'observed':'inconclusive',down?`Reported level fell by ${(-delta*100).toFixed(3)} percentage points across ${(z.ms-a.ms)/1000} s while all samples reported discharging. This is behavioral evidence, not hardware attestation.`:delta===0?'No level drop observed. Rounding, short duration, AC power or a static override can all explain this.':delta<0?'Level fell, but charging transitions prevent a clean discharge comparison.':'No uninterrupted discharge observed. Charging or estimation changes may explain a rise.');
+ add('Battery events',events.some(e=>e.trusted===false)?'review':events.length?'observed':'inconclusive',`${events.length} events; ${events.filter(e=>e.trusted).length} trusted. Missing events during an unchanged interval are normal. Trusted events are not hardware attestation.`);
+ const estimate=typeof a.dischargingTime==='number'&&a.dischargingTime>0?(a.level*(z.ms-a.ms)/1000/a.dischargingTime*100):null;
+ add('Estimate comparison','inconclusive',estimate===null?'No finite runtime estimate for comparison.':`A constant-rate estimate suggests ~${estimate.toFixed(4)} percentage points over this window. Runtime predictions and rounded levels need not track linearly.`);
+ add('Observation conditions','observed',`${samples.length} samples; ${((z.ms-a.ms)/1000).toFixed(1)} seconds; ${samples.filter(s=>s.visibility!=='visible').length} hidden samples. Background throttling can reduce coverage.`);
+ add('Automation disclosure',env.webdriver?'observed':'inconclusive',`navigator.webdriver = ${String(env.webdriver)}. This is separate from battery authenticity.`);
+ return rows.some(r=>r.status==='suspicious')?'Suspicious battery readings':down?'Discharge behavior observed':'Battery authenticity inconclusive';
+}
+function render(reason) {
+ if(done)return;
+ sample('final');done=true;clearInterval(ticker);
+ for(const [target,type,fn] of listeners)target.removeEventListener(type,fn);
+ frame?.remove();
+ workload?.finish();
+ let verdict=assess();
+ if(workload){
+  const w=workload.stats;
+  for(const phase of ['baseline','workload','recovery']){
+   const values=samples.filter(s=>s.phase===phase),first=values[0],last=values.at(-1);
+   const summary={sampleCount:values.length,levelDelta:first&&last?last.level-first.level:null,runtimeEstimateChanges:values.filter((v,i)=>i&&v.dischargingTime!==values[i-1].dischargingTime).length,hiddenSamples:values.filter(v=>v.visibility!=='visible').length};
+   (w.summaries??={})[phase]=summary;
+   add(phase+' battery response',values.length?'observed':'inconclusive',JSON.stringify(summary));
+  }
+  add('CPU workload execution',w.cpu.iterations>0?'observed':'inconclusive',JSON.stringify(w.cpu));
+  add('GPU workload execution',w.gpu.drawCalls>0&&w.gpu.readback?'observed':'inconclusive',JSON.stringify(w.gpu));
+  add('Workload interpretation','inconclusive','Temporal changes are not proof of a causal response or physical hardware. No change does not establish spoofing. Software rendering is possible.');
+  verdict=w.stopped?'Workload interrupted — comparison incomplete':'Workload observation complete — authenticity inconclusive';
+ }
+ const report={schema:'browser-checks/v1',ready:true,kind:config.kind,verdict,physicalBatteryVerified:false,completion:reason,requestedObservationSeconds:config.seconds,durationMs:elapsed(),acquisition,environment:env,...(workload?{workload:workload.stats}:{}),integrity,identity,realm,samples,events,checks:rows,limitations:['A webpage cannot attest a physical battery.','Spoofed values can change over time and across realms.','No percentage change is not evidence of spoofing.','Browser rounding, privacy protections and defaults may hide battery state.']};
+ window.__PROBE_RESULT__=report;
+ $('report-json').textContent=JSON.stringify(report,null,2);
+ $('verdict').textContent=verdict;
+ $('sample-count').textContent=String(samples.length);
+ $('duration').textContent=(report.durationMs/1000).toFixed(1)+'s';
+ $('findings-count').textContent=String(rows.filter(r=>['review','suspicious'].includes(r.status)).length);
+ const z=samples.at(-1);
+ $('battery-level').textContent=z&&typeof z.level==='number'?(z.level*100).toFixed(1)+'%':'—';
+ $('battery-state').textContent=z?(z.charging?'Reported charging':'Reported discharging'):'No battery evidence';
+ $('battery-fill').style.width=z&&typeof z.level==='number'?`${Math.max(0,Math.min(100,z.level*100))}%`:'0%';
+ $('charge-time').textContent=z?time(z.chargingTime):'Unavailable';
+ $('discharge-time').textContent=z?time(z.dischargingTime):'Unavailable';
+ $('verdict').dataset.tone=rows.some(r=>r.status==='suspicious')?'warn':'neutral';
+ for(const row of rows){const tr=document.createElement('tr');cell(tr,row.name);cell(tr,row.status);cell(tr,row.detail);$('checks').append(tr);}
+ const valid=samples.filter(s=>typeof s.level==='number'&&Number.isFinite(s.level));
+ if(valid.length){const lo=Math.min(...valid.map(s=>s.level)),hi=Math.max(...valid.map(s=>s.level)),span=Math.max(.01,hi-lo),base=(lo+hi-span)/2;
+ $('trace').setAttribute('points',valid.map(s=>`${16+((s.ms-valid[0].ms)/Math.max(1,valid.at(-1).ms-valid[0].ms))*668},${112-((s.level-base)/span)*86}`).join(' '));
+ $('trace-caption').textContent=`${(valid[0].level*100).toFixed(2)}% → ${(valid.at(-1).level*100).toFixed(2)}% · scale expanded to at least 1 percentage point`;
+ }
+ $('environment').textContent=JSON.stringify(env,null,2);
+ $('pending').hidden=true;$('results').hidden=false;
+ document.documentElement.dataset.probeReady='true';
+ document.dispatchEvent(new CustomEvent('probe:ready',{detail:report}));
+ $('export').disabled=false;
+ $('export').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`${config.kind}-report.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+}
+// Insert a visible selector only once both navigation and the observation finish.
+function completionMarker() {
+ const report=window.__PROBE_RESULT__;
+ if(document.readyState!=='complete'||!report?.ready||report.completion!=='observation-complete'||$('probe-complete'))return;
+ const marker=document.createElement('div');
+ marker.id='probe-complete';marker.className='pill';marker.setAttribute('role','status');
+ marker.dataset.status='complete';marker.textContent='Page loaded · test complete';
+ $('results').append(marker);
+ releaseNetworkGate();
+}
+window.addEventListener('load',completionMarker,{once:true});
+document.addEventListener('probe:ready',completionMarker);
+window.__finishProbe=render;
+window.__PROBE_READY__=new Promise(resolve=>document.addEventListener('probe:ready',e=>resolve(e.detail),{once:true}));
+async function acquire() {
+ if(config.kind==='environment'){acquisition='not-requested';return;}
+ if(typeof navigator.getBattery!=='function'){acquisition='unsupported';return;}
+ try {
+  const p=navigator.getBattery();
+  battery=await Promise.race([p,new Promise((_,reject)=>setTimeout(()=>reject(new Error('Battery API timed out after 3000 ms')),3000))]);
+  if(done)return;
+  acquisition='available';sample('initial');
+  for(const type of ['chargingchange','levelchange','chargingtimechange','dischargingtimechange']) {const fn=e=>{if(done)return;events.push({ms:elapsed(),type,trusted:e.isTrusted});sample(type);};battery.addEventListener(type,fn);listeners.push([battery,type,fn]);}
+  Promise.resolve(navigator.getBattery()).then(b=>{if(!done)identity=(p===navigator.getBattery()&&b===battery);}).catch(()=>{});
+  const desc=Object.getOwnPropertyDescriptor(Navigator.prototype,'getBattery');
+  integrity={nativeLike:/\[native code\]/.test(Function.prototype.toString.call(navigator.getBattery)),ownNavigatorProperty:Object.hasOwn(navigator,'getBattery'),prototypeMethod:!!desc,managerTag:Object.prototype.toString.call(battery)};
+  frame=document.createElement('iframe');frame.hidden=true;frame.title='Fresh battery comparison';
+  frame.onload=async()=>{try{const w=frame.contentWindow;const peer=await Promise.race([w.navigator.getBattery(),new Promise((_,reject)=>setTimeout(()=>reject(new Error('Iframe API timeout')),2000))]);if(!done)realm={ms:elapsed(),snapshot:snapshot(peer)};}catch(e){if(!done)realm={error:String(e)};}};
+  frame.src='/realm';document.body.append(frame);
+ } catch(e) {acquisition=/timed out/.test(String(e))?'timeout':e?.name==='NotAllowedError'?'blocked':'error';error=String(e);}
+}
+ticker=setInterval(()=>{sample('poll');$('progress').value=Math.min(100,elapsed()/(config.seconds*1000+3000)*100);$('remaining').textContent=Math.max(0,Math.ceil(config.seconds+3-elapsed()/1000))+'s remaining';},1000);
+if(config.workload)workload=window.createBatteryWorkload(config,sample);
+void acquire();
+})();
+</script>
+<script src="/api/completion-gate.js?ms=8500" onerror="window.__finishProbe?.('error')"></script></body></html>

@@ -1,0 +1,1 @@
+{"name":"scrapetrace-checks","version":"0.1.0","private":true,"type":"module","license":"MIT","scripts":{"build":"node scripts/build.mjs","test":"node scripts/verify.mjs","measure":"node scripts/puppeteer.mjs"},"devDependencies":{"puppeteer-core":"24.43.1"}}

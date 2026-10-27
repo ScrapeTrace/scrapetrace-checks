@@ -1,0 +1,57 @@
+)]}'
+{
+  "commit": "1c1572d42c56acede0482fd402a9a91cf6d6aef5",
+  "tree": "545c56f0f3ddf431cfccd2d3fb36cbcd04ec9eca",
+  "parents": [
+    "d9f1016228ab4f4a6282255601bda392c66cc347"
+  ],
+  "author": {
+    "name": "Ryan Sultanem",
+    "email": "rsult@google.com",
+    "time": "Tue Oct 27 09:51:48 2026"
+  },
+  "committer": {
+    "name": "Chromium LUCI CQ",
+    "email": "chromium-scoped@luci-project-accounts.iam.gserviceaccount.com",
+    "time": "Tue Oct 27 09:51:48 2026"
+  },
+  "message": "[CHR][Blink] Clean up stale base::Feature DelayParkingImages\n\nRemove the stale kDelayParkingImages feature flag, which has been\nenabled by default, and update ParkableImageImpl::TransientlyUnableToPark\nand unit tests to always use the delayed parking behavior.\n\nFixed: 356625283\nTest: out/Default/blink_platform_unittests --gtest_filter\u003d*ParkableImage*\nChange-Id: Iccf12154068f467ef1cace71de54853d85d84b88\nReviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/8647331\nCommit-Queue: Colin Blundell \u003cblundell@chromium.org\u003e\nReviewed-by: Thiabaud Engelbrecht \u003cthiabaud@google.com\u003e\nAuto-Submit: Ryan Sultanem \u003crsult@google.com\u003e\nReviewed-by: Colin Blundell \u003cblundell@chromium.org\u003e\nCr-Commit-Position: refs/heads/main@{#1727885}\n",
+  "tree_diff": [
+    {
+      "type": "modify",
+      "old_id": "fe0a79e0d7c4c937e78624beab21bf1054f01170",
+      "old_mode": 33188,
+      "old_path": "third_party/blink/renderer/platform/graphics/parkable_image.cc",
+      "new_id": "ce05a6a87d19ba26ab3a1f36bafcb324c290283c",
+      "new_mode": 33188,
+      "new_path": "third_party/blink/renderer/platform/graphics/parkable_image.cc"
+    },
+    {
+      "type": "modify",
+      "old_id": "c32dccabda4448ccd7866ac76b61a0944c72ef2a",
+      "old_mode": 33188,
+      "old_path": "third_party/blink/renderer/platform/graphics/parkable_image.h",
+      "new_id": "722a7b627591ff2798f647b73cf5309f6d3bdba0",
+      "new_mode": 33188,
+      "new_path": "third_party/blink/renderer/platform/graphics/parkable_image.h"
+    },
+    {
+      "type": "modify",
+      "old_id": "25df31f92d2118121a2d6c455e543806458a5f86",
+      "old_mode": 33188,
+      "old_path": "third_party/blink/renderer/platform/graphics/parkable_image_manager.h",
+      "new_id": "8312af7a3052e0b593047884e66f223ba5b9fa89",
+      "new_mode": 33188,
+      "new_path": "third_party/blink/renderer/platform/graphics/parkable_image_manager.h"
+    },
+    {
+      "type": "modify",
+      "old_id": "20cd1932606e19f2230d3868c68d9c12cddfce47",
+      "old_mode": 33188,
+      "old_path": "third_party/blink/renderer/platform/graphics/parkable_image_test.cc",
+      "new_id": "fe872f0931c920e6d9c824d9b74195f288bcf749",
+      "new_mode": 33188,
+      "new_path": "third_party/blink/renderer/platform/graphics/parkable_image_test.cc"
+    }
+  ]
+}
