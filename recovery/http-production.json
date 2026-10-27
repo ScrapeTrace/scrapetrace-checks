@@ -1,0 +1,49 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "bytes": 9925,
+    "sha256": "936df808f7f82feb08d9901ae3f4d482eaf7ae21acc83a8af18b8e7d34fc49aa"
+  },
+  {
+    "path": "/incognito",
+    "status": 200,
+    "bytes": 4420,
+    "sha256": "1379bdab5499d77ff6350225363ba62b9e6e604f85ad00d771fb40d49ebebb4a",
+    "sourceMatches": true
+  },
+  {
+    "path": "/incognito/app.js",
+    "status": 200,
+    "bytes": 2933,
+    "sha256": "431e48c907556a117f1d8ad84fc4d8d79cf8d239a35f11f33febeb83aea3038f",
+    "sourceMatches": true
+  },
+  {
+    "path": "/incognito/durability.js",
+    "status": 200,
+    "bytes": 8394,
+    "sha256": "7b7c9d4e1aa904ed4767d1f506c21c84bf8c5cfc6089d4e2f9387887bc009ace",
+    "sourceMatches": true
+  },
+  {
+    "path": "/incognito/console.js",
+    "status": 200,
+    "bytes": 8773,
+    "sha256": "684452301cb1b42aaf7d8a686c76b20ea6a07b80d076cc6e34ce8d17425b68fe",
+    "sourceMatches": true
+  },
+  {
+    "path": "/battery?seconds=5",
+    "status": 200,
+    "bytes": 27182,
+    "sha256": "2f28ede864645a67e5527a1dfb2fda083bd8e29669f11c0dff64f6e853ba9e73",
+    "baselineMatchesExceptRunUuid": true
+  },
+  {
+    "path": "/environment",
+    "status": 200,
+    "bytes": 27201,
+    "sha256": "f160c322a2097deb550ae171ae0f92f4be52bfa8ad8018027d70df44a86945bc"
+  }
+]

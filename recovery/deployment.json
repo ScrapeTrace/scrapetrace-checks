@@ -1,0 +1,17 @@
+{
+  "project": "scrapetrace-checks",
+  "accountId": "74dd9702bb66bbf734ff1088fd2955ed",
+  "url": "https://scrapetrace-checks.pages.dev",
+  "incognitoUrl": "https://scrapetrace-checks.pages.dev/incognito",
+  "repository": "https://github.com/ScrapeTrace/scrapetrace-checks",
+  "previousProduction": "351dcd59-bf3f-4a6f-a844-d7e92a4e3883",
+  "previewId": "27373db7-a4a1-48d8-99a4-72d96c14a0cc",
+  "productionId": "c30722da-21db-44ea-8096-8d35b57fa8e4",
+  "productionUrl": "https://c30722da.scrapetrace-checks.pages.dev",
+  "status": "success",
+  "deployedWorkerSha256": "a026cff9383391be4b0e71e4b7a085461e58ee0810bdc4fdbac19b7165773fc4",
+  "compatibilityDate": "2026-10-19",
+  "hostingMode": "existing Direct Upload advanced-mode Pages Worker",
+  "checkedAt": "2026-10-27T10:10:54.209858+00:00",
+  "previewCleanup": "deleted after successful production verification"
+}

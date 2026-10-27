@@ -1,0 +1,15 @@
+{
+  "finishedAt": "2026-10-27T10:11:35.492646+00:00",
+  "removedScratchRoot": "/tmp/st005-research",
+  "removedScratchFilesCount": 82,
+  "scratchAbsent": true,
+  "profilesRemaining": [],
+  "workspaceProfileRootAbsent": true,
+  "containersCreated": 0,
+  "imagesCreated": 0,
+  "browserDownloads": 0,
+  "dependencyInstalls": 0,
+  "preexistingAssetsDeleted": false,
+  "finalSourceAndEvidenceRetained": true,
+  "cleanArchiveBuildMatchesProductionWorker": true
+}
