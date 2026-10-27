@@ -1,0 +1,160 @@
+{
+  "results": [
+    {
+      "viewport": "desktop",
+      "page": "home",
+      "background": "rgb(17, 16, 21)",
+      "font": "\"Inter Variable\", Inter, Arial, Helvetica, sans-serif",
+      "fontReady": true,
+      "accent": "#b7a4f0",
+      "overflow": false,
+      "logoLoaded": true,
+      "navLinks": [
+        "/",
+        "/battery",
+        "/environment",
+        "/incognito",
+        "https://scrapetrace.com/"
+      ],
+      "ready": null,
+      "storageAutoRun": false
+    },
+    {
+      "viewport": "desktop",
+      "page": "battery",
+      "background": "rgb(17, 16, 21)",
+      "font": "\"Inter Variable\", Inter, Arial, Helvetica, sans-serif",
+      "fontReady": true,
+      "accent": "#b7a4f0",
+      "overflow": false,
+      "logoLoaded": true,
+      "navLinks": [
+        "/",
+        "/battery",
+        "/environment",
+        "/incognito",
+        "https://scrapetrace.com/"
+      ],
+      "ready": true,
+      "storageAutoRun": false
+    },
+    {
+      "viewport": "desktop",
+      "page": "environment",
+      "background": "rgb(17, 16, 21)",
+      "font": "\"Inter Variable\", Inter, Arial, Helvetica, sans-serif",
+      "fontReady": true,
+      "accent": "#b7a4f0",
+      "overflow": false,
+      "logoLoaded": true,
+      "navLinks": [
+        "/",
+        "/battery",
+        "/environment",
+        "/incognito",
+        "https://scrapetrace.com/"
+      ],
+      "ready": true,
+      "storageAutoRun": false
+    },
+    {
+      "viewport": "desktop",
+      "page": "incognito",
+      "background": "rgb(17, 16, 21)",
+      "font": "\"Inter Variable\", Inter, Arial, Helvetica, sans-serif",
+      "fontReady": true,
+      "accent": "#b7a4f0",
+      "overflow": false,
+      "logoLoaded": true,
+      "navLinks": [
+        "/",
+        "/battery",
+        "/environment",
+        "/incognito",
+        "https://scrapetrace.com/"
+      ],
+      "ready": null,
+      "storageAutoRun": false
+    },
+    {
+      "viewport": "mobile",
+      "page": "home",
+      "background": "rgb(17, 16, 21)",
+      "font": "\"Inter Variable\", Inter, Arial, Helvetica, sans-serif",
+      "fontReady": true,
+      "accent": "#b7a4f0",
+      "overflow": false,
+      "logoLoaded": true,
+      "navLinks": [
+        "/",
+        "/battery",
+        "/environment",
+        "/incognito",
+        "https://scrapetrace.com/"
+      ],
+      "ready": null,
+      "storageAutoRun": false
+    },
+    {
+      "viewport": "mobile",
+      "page": "battery",
+      "background": "rgb(17, 16, 21)",
+      "font": "\"Inter Variable\", Inter, Arial, Helvetica, sans-serif",
+      "fontReady": true,
+      "accent": "#b7a4f0",
+      "overflow": false,
+      "logoLoaded": true,
+      "navLinks": [
+        "/",
+        "/battery",
+        "/environment",
+        "/incognito",
+        "https://scrapetrace.com/"
+      ],
+      "ready": true,
+      "storageAutoRun": false
+    },
+    {
+      "viewport": "mobile",
+      "page": "environment",
+      "background": "rgb(17, 16, 21)",
+      "font": "\"Inter Variable\", Inter, Arial, Helvetica, sans-serif",
+      "fontReady": true,
+      "accent": "#b7a4f0",
+      "overflow": false,
+      "logoLoaded": true,
+      "navLinks": [
+        "/",
+        "/battery",
+        "/environment",
+        "/incognito",
+        "https://scrapetrace.com/"
+      ],
+      "ready": true,
+      "storageAutoRun": false
+    },
+    {
+      "viewport": "mobile",
+      "page": "incognito",
+      "background": "rgb(17, 16, 21)",
+      "font": "\"Inter Variable\", Inter, Arial, Helvetica, sans-serif",
+      "fontReady": true,
+      "accent": "#b7a4f0",
+      "overflow": false,
+      "logoLoaded": true,
+      "navLinks": [
+        "/",
+        "/battery",
+        "/environment",
+        "/incognito",
+        "https://scrapetrace.com/"
+      ],
+      "ready": null,
+      "storageAutoRun": false
+    }
+  ],
+  "profileCleanup": "removed",
+  "browserErrors": [],
+  "timestamp": "2026-10-27T10:58:53.666Z",
+  "baseUrl": "https://scrapetrace-checks.pages.dev"
+}

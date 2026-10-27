@@ -20,7 +20,7 @@ Node.js 24 was used. Building needs no dependencies:
 npm run build
 ```
 
-The self-contained Pages advanced-mode Worker is generated in `dist/`. Every legacy route delegates to the recovered Worker. Only the tool hub receives an additional link/card. The original source and deployed Worker are retained under `legacy/`; source checksums are in `recovery/legacy-source-manifest.json`.
+The self-contained Pages advanced-mode Worker is generated in `dist/`. Legacy behavior delegates to the recovered Worker, with a shared presentation layer matching the main ScrapeTrace publication. All public tool pages use the same charcoal/purple palette, wordmark, locally hosted Inter font, header and footer; collectors and completion gates remain unchanged. The original source and deployed Worker are retained under `legacy/`; source checksums are in `recovery/legacy-source-manifest.json`.
 
 For verification/benchmarks, install Puppeteer Core in your own environment, or set `PUPPETEER_MODULE` to the existing installation’s ESM entry point. The recorded run used Puppeteer Core 24.43.1. No packages or browsers were downloaded for this study.
 
@@ -35,7 +35,7 @@ ST005_LABEL=tmpfs ST005_PROFILE_ROOT=/tmp/st005-reproduction npm run measure
 
 ## Structure and evidence
 
-- `site/`: client-side experiment, interface, styling, attribution/license.
+- `site/`: client-side experiment, interface, shared ScrapeTrace branding, local font and logo, attribution/license.
 - `scripts/`: build, self-contained console script, local adapter, verification, Puppeteer reproduction, summaries.
 - `legacy/`: recovered battery, workload and environment source, read-only in this investigation.
 - `research/REPORT.md`: findings, source links, actual measurements, uncertainty and remaining work.
@@ -57,4 +57,4 @@ None were requested from providers during this study. The user will perform thos
 
 ## License
 
-New code is MIT licensed. Adapted timing code retains the upstream MIT copyright and permission notice. The recovered existing tools are supplied by the ScrapeTrace owner. Chromium snapshots retain Chromium copyright notices and are governed by Chromium’s BSD license; see `raw/CHROMIUM-LICENSE`. Public research references are cited, not presented as our original work.
+New code is MIT licensed. Adapted timing code retains the upstream MIT copyright and permission notice. The recovered existing tools are supplied by the ScrapeTrace owner. Inter is distributed under the SIL Open Font License 1.1; its notice is in `site/shared/INTER-LICENSE.txt`. Chromium snapshots retain Chromium copyright notices and are governed by Chromium’s BSD license; see `raw/CHROMIUM-LICENSE`. Public research references are cited, not presented as our original work.

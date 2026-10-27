@@ -13,8 +13,8 @@ for(const route of ['/battery','/battery/workload','/environment','/cpu-workload
 for(const route of ['/battery?seconds=5','/battery/workload?phaseSeconds=5','/environment','/cpu-workload.js','/realm']){
  const a=await worker.fetch(new Request('http://localhost'+route));const b=await legacy.fetch(new Request('http://localhost'+route));
  // Legacy run UUID is generated separately for each response.
- const normalize=s=>s.replace(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/g,'UUID');
- assert.equal(normalize(await a.text()),normalize(await b.text()));checks.push('preserved body '+route);
+ const normalize=s=>s.replace(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/g,'UUID').replace(/<style>[\s\S]*?<\/style>/g,'').replace(/<header[^>]*>[\s\S]*?<\/header>/g,'').replace(/<footer[^>]*>[\s\S]*?<\/footer>/g,'').replace(/<a class="skip-link"[^>]*>[\s\S]*?<\/a>/g,'').replace(/<link rel="icon"[^>]*>/g,'').replace(/<meta name="theme-color"[^>]*>/g,'').replace(/<main id="main">/g,'<main>');
+ assert.equal(normalize(await a.text()),normalize(await b.text()));checks.push('preserved behavior markup '+route);
 }
 const modulePath=process.env.PUPPETEER_MODULE;
 const p=modulePath?(await import(pathToFileURL(modulePath))).default:(await import('puppeteer-core')).default;
@@ -35,15 +35,15 @@ try{
  const failed=await page.evaluate(()=>ST005.measure());assert.equal(failed.status,'inconclusive');assert.equal(failed.cleanup.status,'deleted');checks.push('write failure abstains and cleans');
  await page.reload();await page.select('#runs','1');await page.click('#start');await waitComplete(page);
  await mkdir(new URL('../raw/',import.meta.url),{recursive:true});
- await page.screenshot({path:new URL('../raw/ui-desktop.png',import.meta.url).pathname,fullPage:true});
- await page.setViewport({width:390,height:844});await page.screenshot({path:new URL('../raw/ui-mobile.png',import.meta.url).pathname,fullPage:true});
+ await page.screenshot({path:new URL('../raw/theme/incognito-results-desktop.png',import.meta.url).pathname,fullPage:true});
+ await page.setViewport({width:390,height:844});await page.screenshot({path:new URL('../raw/theme/incognito-results-mobile.png',import.meta.url).pathname,fullPage:true});
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);checks.push('mobile viewport fits');
  assert.deepEqual(errors,[]);checks.push('no page errors');
  // Existing passive battery retains its real browser completion contract.
  await page.goto(server.url+'/battery?seconds=5',{waitUntil:'load',timeout:25000});
  assert(await page.evaluate(()=>window.__PROBE_RESULT__?.ready));checks.push('battery real browser load completion');
 }finally{await browser?.close();await rm(profile,{recursive:true,force:true});await server.close();}
-await writeFile(new URL('../raw/verification.json',import.meta.url),JSON.stringify({checks,passed:checks.length,timestamp:new Date().toISOString(),profileCleanup:'removed'},null,2));
+await writeFile(new URL('../raw/theme/verification.json',import.meta.url),JSON.stringify({checks,passed:checks.length,timestamp:new Date().toISOString(),profileCleanup:'removed'},null,2));
 console.log(checks.join('\n'));
 
 async function waitComplete(page){const until=Date.now()+60000;while(Date.now()<until){if(await page.evaluate(()=>Boolean(window.__ST005_RESULT__?.complete)))return;await new Promise(r=>setTimeout(r,100));}throw new Error('Completion deadline exceeded');}

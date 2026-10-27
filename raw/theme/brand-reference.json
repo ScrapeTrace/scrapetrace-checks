@@ -1,0 +1,27 @@
+{
+  "reference": "ScrapeTrace main-site source and live homepage",
+  "palette": {
+    "background": "#111015",
+    "surface": "#19171f",
+    "surface2": "#211e2a",
+    "text": "#f7f5fb",
+    "muted": "#bbb5c8",
+    "accent": "#b7a4f0",
+    "border": "#34303e"
+  },
+  "font": "Inter Variable, self-hosted, SIL OFL 1.1",
+  "assets": {
+    "logo-transparent.png": {
+      "source": "../scrapetrace/public/brand/logo-transparent.png",
+      "sha256": "bf294be5211955b97f5ffe46ed9f83fa6d80c0a57f85d4b7d83236b4309848b9"
+    },
+    "favicon.svg": {
+      "source": "../scrapetrace/public/favicon.svg",
+      "sha256": "76d7d509fd54dbf697d2b4f5bfcfbd3b99e17bbd268e0d29a92b70be58d697aa"
+    },
+    "inter-latin-normal.woff2": {
+      "source": "../scrapetrace/node_modules/@fontsource-variable/inter/files/inter-latin-standard-normal.woff2",
+      "sha256": "2c295d99e26dcf357d4d01bcf270fd6924b600c9a13dd8c363ef114f4c6976fa"
+    }
+  }
+}

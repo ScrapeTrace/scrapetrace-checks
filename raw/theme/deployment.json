@@ -1,0 +1,44 @@
+{
+  "deploymentId": "ca1cbb52-750c-488e-843b-35fe208e88e1",
+  "previousDeploymentId": "c30722da-21db-44ea-8096-8d35b57fa8e4",
+  "url": "https://scrapetrace-checks.pages.dev",
+  "checks": [
+    {
+      "path": "/checks/theme.css",
+      "status": 200,
+      "sourceMatches": true,
+      "bytes": 6841
+    },
+    {
+      "path": "/checks/logo.png",
+      "status": 200,
+      "sourceMatches": true,
+      "bytes": 17988
+    },
+    {
+      "path": "/checks/inter-latin.woff2",
+      "status": 200,
+      "sourceMatches": true,
+      "bytes": 72920
+    },
+    {
+      "path": "/incognito/durability.js",
+      "status": 200,
+      "sourceMatches": true,
+      "bytes": 8394
+    },
+    {
+      "path": "/incognito/app.js",
+      "status": 200,
+      "sourceMatches": true,
+      "bytes": 2933
+    },
+    {
+      "path": "/incognito/console.js",
+      "status": 200,
+      "sourceMatches": true,
+      "bytes": 8773
+    }
+  ],
+  "workerSha256": "cc50ddd83270652021ffdc6fa4a2a6a5fb3a76e408bf01b76acc250330311195"
+}
