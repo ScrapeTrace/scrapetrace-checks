@@ -34,6 +34,18 @@ const assets={
  '/checks/theme.css':{type:'text/css',body:theme},
  '/favicon.svg':{type:'image/svg+xml',body:await read('site/shared/favicon.svg')}
 };
+const consistencyTemplate=await read('site/consistency/index.html');
+for(const [path,mode,title,description,link] of [
+ ['/consistency','simple','User-Agent cross consistency','Compare the User-Agent reported by this page, a frame and three types of worker. Differences expand automatically.','<a href="/consistency/full">Need more detail? Compare the full navigator →</a>'],
+ ['/consistency/full','full','Full navigator comparison','Inspect navigator properties across the page, frame, dedicated worker, shared worker and service worker.','<a href="/consistency">← Simple User-Agent comparison</a>']
+]){
+ const body=consistencyTemplate.replaceAll('%%MODE%%',mode).replaceAll('%%TITLE%%',title).replace('%%DESCRIPTION%%',description).replace('%%LINK%%',link).replace('%%SHARED_HEADER%%',header).replace('%%SHARED_FOOTER%%',footer);
+ assets[path]={type:'text/html',body};
+}
+for(const file of ['collect.js','app.js','worker.js','shared-worker.js','service-worker.js','frame.js','style.css']){
+ assets['/consistency/'+file]={type:file.endsWith('.css')?'text/css':'application/javascript',body:await read('site/consistency/'+file)};
+}
+assets['/consistency/frame']={type:'text/html',body:await read('site/consistency/frame.html')};
 for(const [path,file,type] of [['/checks/logo.png','logo-transparent.png','image/png'],['/checks/inter-latin.woff2','inter-latin-normal.woff2','font/woff2']]){
  assets[path]={type,body:(await readFile(new URL('site/shared/'+file,root))).toString('base64'),base64:true};
 }
@@ -45,12 +57,12 @@ export default {async fetch(request,env,ctx){
   if(!['GET','HEAD'].includes(request.method))return new Response('Method not allowed',{status:405,headers:{allow:'GET, HEAD'}});
   const a=CHECK_ASSETS[path];
   const body=request.method==='HEAD'?null:a.base64?Uint8Array.from(atob(a.body),c=>c.charCodeAt(0)):a.body;
-  return new Response(body,{headers:{'content-type':a.type+(a.base64?'':'; charset=utf-8'),'cache-control':'no-store','x-content-type-options':'nosniff','referrer-policy':'no-referrer','content-security-policy':"default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"}});
+  return new Response(body,{headers:{'content-type':a.type+(a.base64?'':'; charset=utf-8'),'cache-control':'no-store','x-content-type-options':'nosniff','referrer-policy':'no-referrer','content-security-policy':"default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors "+(path === "/consistency/frame" ? "'self'" : "'none'")+(path.startsWith('/consistency') ? "; frame-src 'self'; worker-src 'self'" : "")}});
  }
  const response=await legacyWorker.fetch(request,env,ctx);
  if(path==='/' && request.method==='GET'){
   let html=await response.text();
-  html=html.replace('03 tools / ready to run','04 tools / ready to run').replace('<div class="cards">','<div class="cards"><a class="card" href="/incognito"><span class="num">ST—005 / STORAGE</span><h2>IndexedDB durability timing</h2><p>Compare strict and relaxed commit times. A transparent timing heuristic with raw measurements and explicit uncertainty.</p><span class="go">Run storage experiment ↗</span></a>');
+  html=html.replace('03 tools / ready to run','06 tools / ready to run').replace('<div class="cards">','<div class="cards"><a class="card" href="/consistency"><span class="num">BROWSER / CONSISTENCY</span><h2>User-Agent cross consistency</h2><p>Compare the page, frame and three worker types. Expand differences and inspect reported User-Agents.</p><span class="go">Compare User-Agents ↗</span></a><a class="card" href="/consistency/full"><span class="num">BROWSER / NAVIGATOR</span><h2>Full navigator comparison</h2><p>Inspect navigator properties and API availability across browser contexts, with local JSON export.</p><span class="go">Compare navigator properties ↗</span></a><a class="card" href="/incognito"><span class="num">ST—005 / STORAGE</span><h2>IndexedDB durability timing</h2><p>Compare strict and relaxed commit times. A transparent timing heuristic with raw measurements and explicit uncertainty.</p><span class="go">Run storage experiment ↗</span></a>');
   return new Response(html,{status:response.status,headers:response.headers});
  }
  return response;
