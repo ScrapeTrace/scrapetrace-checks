@@ -51,6 +51,11 @@ for(const file of ['app.js','geometry.js','style.css']){
  assets['/screen/'+file]={type:file.endsWith('.css')?'text/css':'application/javascript',body:await read('site/screen/'+file)};
 }
 
+assets['/mobile']={type:'text/html',body:(await read('site/mobile/index.html')).replace('%%SHARED_HEADER%%',header).replace('%%SHARED_FOOTER%%',footer)};
+for(const file of ['app.js','probe.js','style.css']){
+ assets['/mobile/'+file]={type:file.endsWith('.css')?'text/css':'application/javascript',body:await read('site/mobile/'+file)};
+}
+
 for(const [path,file,type] of [['/checks/logo.png','logo-transparent.png','image/png'],['/checks/inter-latin.woff2','inter-latin-normal.woff2','font/woff2']]){
  assets[path]={type,body:(await readFile(new URL('site/shared/'+file,root))).toString('base64'),base64:true};
 }
@@ -61,13 +66,16 @@ export default {async fetch(request,env,ctx){
  if(Object.hasOwn(CHECK_ASSETS,path)){
   if(!['GET','HEAD'].includes(request.method))return new Response('Method not allowed',{status:405,headers:{allow:'GET, HEAD'}});
   const a=CHECK_ASSETS[path];
-  const body=request.method==='HEAD'?null:a.base64?Uint8Array.from(atob(a.body),c=>c.charCodeAt(0)):a.body;
+  // Only document request headers are reflected; no browser readings are sent here.
+  const requestData=path==='/mobile'?JSON.stringify({userAgent:request.headers.get('user-agent'),secChUaMobile:request.headers.get('sec-ch-ua-mobile'),secChUaPlatform:request.headers.get('sec-ch-ua-platform'),secChUa:request.headers.get('sec-ch-ua')}).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'):null;
+  const textBody=path==='/mobile'?a.body.replace('%%REQUEST_DATA%%',()=>requestData):a.body;
+  const body=request.method==='HEAD'?null:a.base64?Uint8Array.from(atob(a.body),c=>c.charCodeAt(0)):textBody;
   return new Response(body,{headers:{'content-type':a.type+(a.base64?'':'; charset=utf-8'),'cache-control':'no-store','x-content-type-options':'nosniff','referrer-policy':'no-referrer','content-security-policy':"default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors "+(path === "/consistency/frame" ? "'self'" : "'none'")+(path.startsWith('/consistency') ? "; frame-src 'self'; worker-src 'self'" : "")}});
  }
  const response=await legacyWorker.fetch(request,env,ctx);
  if(path==='/' && request.method==='GET'){
   let html=await response.text();
-  html=html.replace('03 tools / ready to run','07 tools / ready to run').replace('<div class="cards">','<div class="cards"><a class="card" href="/screen"><span class="num">BROWSER / GEOMETRY</span><h2>Screen &amp; window geometry</h2><p>Visualize the reported screen, window and page. Inspect browser UI gaps, available screen area and visual viewport differences.</p><span class="go">Inspect screen layout ↗</span></a><a class="card" href="/consistency"><span class="num">BROWSER / CONSISTENCY</span><h2>User-Agent cross consistency</h2><p>Compare the page, frame and three worker types. Expand differences and inspect reported User-Agents.</p><span class="go">Compare User-Agents ↗</span></a><a class="card" href="/consistency/full"><span class="num">BROWSER / NAVIGATOR</span><h2>Full navigator comparison</h2><p>Inspect navigator properties and API availability across browser contexts, with local JSON export.</p><span class="go">Compare navigator properties ↗</span></a><a class="card" href="/incognito"><span class="num">ST—005 / STORAGE</span><h2>IndexedDB durability timing</h2><p>Compare strict and relaxed commit times. A transparent timing heuristic with raw measurements and explicit uncertainty.</p><span class="go">Run storage experiment ↗</span></a>');
+  html=html.replace('03 tools / ready to run','08 tools / ready to run').replace('<div class="cards">','<div class="cards"><a class="card" href="/mobile"><span class="num">BROWSER / MOBILE</span><h2>Mobile configuration check</h2><p>Compare screen size, touch, pointer capabilities, User-Agent and mobile client hints. See which signals agree and which differ.</p><span class="go">Inspect mobile signals ↗</span></a><a class="card" href="/screen"><span class="num">BROWSER / GEOMETRY</span><h2>Screen &amp; window geometry</h2><p>Visualize the reported screen, window and page. Inspect browser UI gaps, available screen area and visual viewport differences.</p><span class="go">Inspect screen layout ↗</span></a><a class="card" href="/consistency"><span class="num">BROWSER / CONSISTENCY</span><h2>User-Agent cross consistency</h2><p>Compare the page, frame and three worker types. Expand differences and inspect reported User-Agents.</p><span class="go">Compare User-Agents ↗</span></a><a class="card" href="/consistency/full"><span class="num">BROWSER / NAVIGATOR</span><h2>Full navigator comparison</h2><p>Inspect navigator properties and API availability across browser contexts, with local JSON export.</p><span class="go">Compare navigator properties ↗</span></a><a class="card" href="/incognito"><span class="num">ST—005 / STORAGE</span><h2>IndexedDB durability timing</h2><p>Compare strict and relaxed commit times. A transparent timing heuristic with raw measurements and explicit uncertainty.</p><span class="go">Run storage experiment ↗</span></a>');
   return new Response(html,{status:response.status,headers:response.headers});
  }
  return response;

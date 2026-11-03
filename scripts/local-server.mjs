@@ -3,7 +3,7 @@ import {Readable} from 'node:stream';
 export async function serve(worker){
  const server=http.createServer(async(req,res)=>{
   try{
-   const request=new Request('http://127.0.0.1:'+server.address().port+req.url,{method:req.method});
+   const request=new Request('http://127.0.0.1:'+server.address().port+req.url,{method:req.method,headers:req.headers});
    const response=await worker.fetch(request,{}, {waitUntil:p=>p.catch(()=>{})});
    res.writeHead(response.status,Object.fromEntries(response.headers));
    if(response.body){const stream=Readable.fromWeb(response.body);res.on('close',()=>stream.destroy());stream.on('error',()=>{});stream.pipe(res);}else res.end();
