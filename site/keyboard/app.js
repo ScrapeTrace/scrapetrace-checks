@@ -14,6 +14,7 @@ function release(){if(loaded&&window.__PROBE_READY__){for(const gate of gates)ga
 function render(result,a){
  const usable=['measured','empty'].includes(result.status),map=Object.fromEntries(result.entries),has=key=>Object.hasOwn(map,key);
  $('headline').textContent=a.headline;$('reason').textContent=a.reason;
+ $('headless-tag').hidden=!a.fallbackMatch;
  const count=usable?result.entries.filter(([key])=>WRITING_KEYS.includes(key)).length:null;
  $('key-count').textContent=usable?`${count} / 50 positions · ${result.entries.length} total entries`:'No usable map';
  $('keyboard').replaceChildren();
@@ -63,6 +64,7 @@ function publish(result){
 async function run(){
  const runId=++generation;$('run').disabled=true;$('download').disabled=true;$('probe-complete')?.remove();
  window.__PROBE_READY__=false;window.__PROBE_RESULT__=null;document.documentElement.removeAttribute('data-probe-ready');
+ $('headless-tag').hidden=true;
  $('status').textContent='Reading keyboard layout…';$('headline').textContent='Waiting for the layout map';$('reason').textContent='The API has a five-second collection deadline.';
  const result=await measure();if(runId===generation)publish(result);
 }
