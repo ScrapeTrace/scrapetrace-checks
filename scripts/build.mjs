@@ -46,6 +46,11 @@ for(const file of ['collect.js','app.js','worker.js','shared-worker.js','service
  assets['/consistency/'+file]={type:file.endsWith('.css')?'text/css':'application/javascript',body:await read('site/consistency/'+file)};
 }
 assets['/consistency/frame']={type:'text/html',body:await read('site/consistency/frame.html')};
+assets['/screen']={type:'text/html',body:(await read('site/screen/index.html')).replace('%%SHARED_HEADER%%',header).replace('%%SHARED_FOOTER%%',footer)};
+for(const file of ['app.js','geometry.js','style.css']){
+ assets['/screen/'+file]={type:file.endsWith('.css')?'text/css':'application/javascript',body:await read('site/screen/'+file)};
+}
+
 for(const [path,file,type] of [['/checks/logo.png','logo-transparent.png','image/png'],['/checks/inter-latin.woff2','inter-latin-normal.woff2','font/woff2']]){
  assets[path]={type,body:(await readFile(new URL('site/shared/'+file,root))).toString('base64'),base64:true};
 }
@@ -62,7 +67,7 @@ export default {async fetch(request,env,ctx){
  const response=await legacyWorker.fetch(request,env,ctx);
  if(path==='/' && request.method==='GET'){
   let html=await response.text();
-  html=html.replace('03 tools / ready to run','06 tools / ready to run').replace('<div class="cards">','<div class="cards"><a class="card" href="/consistency"><span class="num">BROWSER / CONSISTENCY</span><h2>User-Agent cross consistency</h2><p>Compare the page, frame and three worker types. Expand differences and inspect reported User-Agents.</p><span class="go">Compare User-Agents ↗</span></a><a class="card" href="/consistency/full"><span class="num">BROWSER / NAVIGATOR</span><h2>Full navigator comparison</h2><p>Inspect navigator properties and API availability across browser contexts, with local JSON export.</p><span class="go">Compare navigator properties ↗</span></a><a class="card" href="/incognito"><span class="num">ST—005 / STORAGE</span><h2>IndexedDB durability timing</h2><p>Compare strict and relaxed commit times. A transparent timing heuristic with raw measurements and explicit uncertainty.</p><span class="go">Run storage experiment ↗</span></a>');
+  html=html.replace('03 tools / ready to run','07 tools / ready to run').replace('<div class="cards">','<div class="cards"><a class="card" href="/screen"><span class="num">BROWSER / GEOMETRY</span><h2>Screen &amp; window geometry</h2><p>Visualize the reported screen, window and page. Inspect browser UI gaps, available screen area and visual viewport differences.</p><span class="go">Inspect screen layout ↗</span></a><a class="card" href="/consistency"><span class="num">BROWSER / CONSISTENCY</span><h2>User-Agent cross consistency</h2><p>Compare the page, frame and three worker types. Expand differences and inspect reported User-Agents.</p><span class="go">Compare User-Agents ↗</span></a><a class="card" href="/consistency/full"><span class="num">BROWSER / NAVIGATOR</span><h2>Full navigator comparison</h2><p>Inspect navigator properties and API availability across browser contexts, with local JSON export.</p><span class="go">Compare navigator properties ↗</span></a><a class="card" href="/incognito"><span class="num">ST—005 / STORAGE</span><h2>IndexedDB durability timing</h2><p>Compare strict and relaxed commit times. A transparent timing heuristic with raw measurements and explicit uncertainty.</p><span class="go">Run storage experiment ↗</span></a>');
   return new Response(html,{status:response.status,headers:response.headers});
  }
  return response;
