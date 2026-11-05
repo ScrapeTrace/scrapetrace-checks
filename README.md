@@ -12,6 +12,7 @@ Browser diagnostics by [ScrapeTrace](https://scrapetrace.com/) for inspecting wh
 | [/consistency/full](https://scrapetrace-checks.pages.dev/consistency/full) | Compares navigator properties and API availability across the same five contexts, including platform, languages and hardware concurrency. |
 | [/screen](https://scrapetrace-checks.pages.dev/screen) | Visualizes screen, available screen area, window and page dimensions, plus visual viewport differences and reported positioning. |
 | [/mobile](https://scrapetrace-checks.pages.dev/mobile) | Compares screen geometry, touch and pointer capabilities, User-Agent, platform and mobile client hints. Also compares document request headers with JavaScript readings. |
+| [/ai](https://scrapetrace-checks.pages.dev/ai) | Checks seven built-in AI interfaces, availability, sample responses and session behavior using ready models. |
 | [/keyboard](https://scrapetrace-checks.pages.dev/keyboard) | Displays the keyboard layout map and compares every entry with the Chromium US fallback map. Highlights international keys and missing positions. |
 | [/battery](https://scrapetrace-checks.pages.dev/battery) | Observes Battery Status API readings and changes over a sampling window. |
 | [/battery/workload](https://scrapetrace-checks.pages.dev/battery/workload) | Records battery readings during baseline, bounded CPU and WebGL work, and recovery phases. |
@@ -28,7 +29,7 @@ A plain HTTP fetch returns the initial page, not browser measurements. For autom
 
 ### Completion signals
 
-For the consistency, screen, mobile, keyboard, battery and environment checks, wait for:
+For the AI, consistency, screen, mobile, keyboard, battery and environment checks, wait for:
 
 ```js
 await page.waitForSelector('#probe-complete[data-status="complete"]');
@@ -37,6 +38,7 @@ const result = await page.evaluate(() => window.__PROBE_RESULT__);
 
 The pages also expose `window.__PROBE_READY__`, `html[data-probe-ready="true"]` and the `probe:ready` document event. Completion can include an explicit unsupported, failed or timed-out result; inspect the reported status.
 
+- **Built-in AI:** runs asynchronously and tries only APIs whose `availability()` returns `available`. Navigation load alone is insufficient. Allow at least 75 seconds for the completion marker. No session is started for downloadable, downloading, unavailable or unknown states. The page has per-API click retries, a Stop button, sample output and local JSON export.
 - **Consistency:** collection is asynchronous across five contexts, so navigation load alone is insufficient. Each context has a 10-second deadline. Full mode inventories properties and passive getter values; it does not invoke the methods it lists.
 - **Screen:** readings update live on resize and window movement. Use **Freeze readings** to retain a snapshot, or read the result immediately after completion.
 - **Mobile:** the first result is rendered before navigation load. Reruns refresh JavaScript readings while retaining the original document request headers; reload to capture new request headers.
@@ -70,9 +72,14 @@ CHROME_PATH=/usr/bin/google-chrome npm run test:consistency
 CHROME_PATH=/usr/bin/google-chrome npm run test:screen
 CHROME_PATH=/usr/bin/google-chrome npm run test:mobile
 CHROME_PATH=/usr/bin/google-chrome npm run test:keyboard
+npm run test:ai
 ```
 
 Set `PUPPETEER_MODULE` to an existing Puppeteer Core ESM entry point if using an installation outside this repository. Browser verification includes controlled fixtures; these are functional tests, not provider measurements. Retained keyboard verification is in [verification/keyboard-layout-2026-11-03.json](verification/keyboard-layout-2026-11-03.json).
+
+The AI check covers LanguageModel, Summarizer, Writer, Rewriter, Proofreader, LanguageDetector and Translator with English samples (English-to-French translation). It separates property exposure, availability and a successful session response. Small receiver, abort and destroyed-session checks are recorded separately. At most two sessions run together, with three-second availability, 20-second functional and 65-second overall deadlines. Timeouts, missing methods, unexpected output, activation restrictions and cleanup errors remain explicit. This checks public APIs, not local model directories. Functional success does not identify a native implementation. Sources are in [site/ai/SOURCES.md](site/ai/SOURCES.md).
+
+`npm run test:ai` verifies controlled collector cases and built Worker routing without starting a browser or downloading models. Local Chrome 157 also completed real LanguageModel, Summarizer and LanguageDetector calls on 5 November 2026. Results and browser/UI checks are recorded in [verification/built-in-ai-2026-11-05.json](verification/built-in-ai-2026-11-05.json). No provider calls were made.
 
 `npm run measure` runs the separate IndexedDB reproduction study, including headed browser runs that require a graphical display. Its methodology and recorded evidence are documented in [research/REPORT.md](research/REPORT.md).
 

@@ -1,0 +1,399 @@
+{
+  "date": "2026-11-05",
+  "purpose": "Functional/UI verification, not provider measurements or native implementation attestation.",
+  "unitAndWorkerCommand": "npm run build && npm run test:ai",
+  "unitAndWorkerGroups": 10,
+  "native": {
+    "purpose": "Local native browser verification; not a provider measurement.",
+    "result": {
+      "schema": "scrapetrace/built-in-ai/v1",
+      "capturedAt": "2026-11-05T06:16:09.224Z",
+      "complete": true,
+      "ready": true,
+      "environment": {
+        "secureContext": true,
+        "visibility": "visible",
+        "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+        "language": "en-US",
+        "userActivation": true
+      },
+      "policy": {
+        "automaticDownloads": false,
+        "availabilityTimeoutMs": 3000,
+        "functionalTimeoutMs": 20000,
+        "overallTimeoutMs": 65000,
+        "maxConcurrentSessions": 2
+      },
+      "summary": {
+        "total": 7,
+        "exposed": 4,
+        "available": 3,
+        "functional": 3
+      },
+      "features": [
+        {
+          "id": "LanguageModel",
+          "name": "Language model",
+          "description": "Prompt API",
+          "method": "prompt",
+          "options": {
+            "expectedInputs": [
+              {
+                "type": "text",
+                "languages": [
+                  "en"
+                ]
+              }
+            ],
+            "expectedOutputs": [
+              {
+                "type": "text",
+                "languages": [
+                  "en"
+                ]
+              }
+            ]
+          },
+          "input": "In one short sentence, describe a blue bicycle.",
+          "api": {
+            "exposed": true,
+            "type": "function",
+            "availability": true,
+            "create": true
+          },
+          "availability": {
+            "status": "available",
+            "reported": "available"
+          },
+          "functional": {
+            "status": "passed",
+            "output": {
+              "text": "A vibrant blue bicycle gleams, ready for a breezy ride. \n",
+              "characters": 57,
+              "truncated": false
+            },
+            "responseMs": 5766,
+            "elapsedMs": 5767
+          },
+          "checks": [
+            {
+              "id": "receiver",
+              "label": "Invalid receiver rejected",
+              "status": "passed",
+              "outcome": "rejected",
+              "error": {
+                "name": "TypeError",
+                "message": "Failed to execute 'prompt' on 'LanguageModel': Illegal invocation"
+              }
+            },
+            {
+              "id": "abort",
+              "label": "Aborted operation rejected",
+              "status": "passed",
+              "outcome": "rejected",
+              "error": {
+                "name": "AbortError",
+                "message": "Failed to execute 'prompt' on 'LanguageModel': ScrapeTrace cancellation check"
+              }
+            },
+            {
+              "id": "destroy",
+              "label": "Destroyed session rejected",
+              "status": "passed",
+              "outcome": "rejected",
+              "error": {
+                "name": "InvalidStateError",
+                "message": "Failed to execute 'prompt' on 'LanguageModel': The model execution session has been destroyed."
+              }
+            }
+          ],
+          "cleanup": {
+            "status": "destroyed"
+          }
+        },
+        {
+          "id": "Summarizer",
+          "name": "Summarizer",
+          "description": "Condense text",
+          "method": "summarize",
+          "options": {
+            "expectedInputLanguages": [
+              "en"
+            ],
+            "expectedContextLanguages": [
+              "en"
+            ],
+            "outputLanguage": "en",
+            "type": "tldr",
+            "format": "plain-text",
+            "length": "short"
+          },
+          "input": "The local library opens at nine in the morning. It offers books, study rooms and free workshops. On Saturdays it closes at four in the afternoon.",
+          "api": {
+            "exposed": true,
+            "type": "function",
+            "availability": true,
+            "create": true
+          },
+          "availability": {
+            "status": "available",
+            "reported": "available"
+          },
+          "functional": {
+            "status": "passed",
+            "output": {
+              "text": "The local library is open from nine in the morning to four in the afternoon on Saturdays and provides books, study rooms, and free workshops.",
+              "characters": 141,
+              "truncated": false
+            },
+            "responseMs": 8523,
+            "elapsedMs": 8523
+          },
+          "checks": [
+            {
+              "id": "receiver",
+              "label": "Invalid receiver rejected",
+              "status": "passed",
+              "outcome": "rejected",
+              "error": {
+                "name": "TypeError",
+                "message": "Failed to execute 'summarize' on 'Summarizer': Illegal invocation"
+              }
+            },
+            {
+              "id": "abort",
+              "label": "Aborted operation rejected",
+              "status": "passed",
+              "outcome": "rejected",
+              "error": {
+                "name": "AbortError",
+                "message": "Failed to execute 'summarize' on 'Summarizer': ScrapeTrace cancellation check"
+              }
+            },
+            {
+              "id": "destroy",
+              "label": "Destroyed session rejected",
+              "status": "passed",
+              "outcome": "rejected",
+              "error": {
+                "name": "AbortError",
+                "message": "Failed to execute 'summarize' on 'Summarizer': signal is aborted without reason"
+              }
+            }
+          ],
+          "cleanup": {
+            "status": "destroyed"
+          }
+        },
+        {
+          "id": "Writer",
+          "name": "Writer",
+          "description": "Generate text",
+          "method": "write",
+          "options": {
+            "expectedInputLanguages": [
+              "en"
+            ],
+            "expectedContextLanguages": [
+              "en"
+            ],
+            "outputLanguage": "en",
+            "tone": "neutral",
+            "format": "plain-text",
+            "length": "short"
+          },
+          "input": "Write one short sentence inviting a friend to a library workshop.",
+          "api": {
+            "exposed": false
+          },
+          "availability": {
+            "status": "not-exposed"
+          },
+          "functional": {
+            "status": "not-run"
+          },
+          "checks": [],
+          "cleanup": {
+            "status": "not-created"
+          }
+        },
+        {
+          "id": "Rewriter",
+          "name": "Rewriter",
+          "description": "Revise text",
+          "method": "rewrite",
+          "options": {
+            "expectedInputLanguages": [
+              "en"
+            ],
+            "expectedContextLanguages": [
+              "en"
+            ],
+            "outputLanguage": "en",
+            "tone": "more-formal",
+            "format": "plain-text",
+            "length": "as-is"
+          },
+          "input": "Hey, come to our library workshop on Saturday.",
+          "api": {
+            "exposed": false
+          },
+          "availability": {
+            "status": "not-exposed"
+          },
+          "functional": {
+            "status": "not-run"
+          },
+          "checks": [],
+          "cleanup": {
+            "status": "not-created"
+          }
+        },
+        {
+          "id": "Proofreader",
+          "name": "Proofreader",
+          "description": "Correct text",
+          "method": "proofread",
+          "options": {
+            "expectedInputLanguages": [
+              "en"
+            ]
+          },
+          "input": "She go to the library every Saturday.",
+          "api": {
+            "exposed": false
+          },
+          "availability": {
+            "status": "not-exposed"
+          },
+          "functional": {
+            "status": "not-run"
+          },
+          "checks": [],
+          "cleanup": {
+            "status": "not-created"
+          }
+        },
+        {
+          "id": "LanguageDetector",
+          "name": "Language detector",
+          "description": "Identify text language",
+          "method": "detect",
+          "options": {},
+          "input": "The library has books and quiet rooms for reading.",
+          "api": {
+            "exposed": true,
+            "type": "function",
+            "availability": true,
+            "create": true
+          },
+          "availability": {
+            "status": "available",
+            "reported": "available"
+          },
+          "functional": {
+            "status": "passed",
+            "output": {
+              "candidates": [
+                {
+                  "detectedLanguage": "en",
+                  "confidence": 0.999663233757019
+                },
+                {
+                  "detectedLanguage": "und",
+                  "confidence": 4.4252860789129045e-06
+                }
+              ],
+              "count": 2,
+              "truncated": false
+            },
+            "responseMs": 35,
+            "elapsedMs": 36
+          },
+          "checks": [
+            {
+              "id": "receiver",
+              "label": "Invalid receiver rejected",
+              "status": "passed",
+              "outcome": "rejected",
+              "error": {
+                "name": "TypeError",
+                "message": "Failed to execute 'detect' on 'LanguageDetector': Illegal invocation"
+              }
+            },
+            {
+              "id": "abort",
+              "label": "Aborted operation rejected",
+              "status": "passed",
+              "outcome": "rejected",
+              "error": {
+                "name": "AbortError",
+                "message": "Failed to execute 'detect' on 'LanguageDetector': ScrapeTrace cancellation check"
+              }
+            },
+            {
+              "id": "destroy",
+              "label": "Destroyed session rejected",
+              "status": "passed",
+              "outcome": "rejected",
+              "error": {
+                "name": "AbortError",
+                "message": "Failed to execute 'detect' on 'LanguageDetector': signal is aborted without reason"
+              }
+            }
+          ],
+          "cleanup": {
+            "status": "destroyed"
+          }
+        },
+        {
+          "id": "Translator",
+          "name": "Translator",
+          "description": "English \u2192 French",
+          "method": "translate",
+          "options": {
+            "sourceLanguage": "en",
+            "targetLanguage": "fr"
+          },
+          "input": "The library is open today.",
+          "api": {
+            "exposed": true,
+            "type": "function",
+            "availability": true,
+            "create": true
+          },
+          "availability": {
+            "status": "downloadable",
+            "reported": "downloadable"
+          },
+          "functional": {
+            "status": "not-run"
+          },
+          "checks": [],
+          "cleanup": {
+            "status": "not-created"
+          }
+        }
+      ]
+    },
+    "ui": {
+      "cards": 7,
+      "completeMarker": "complete",
+      "htmlRetainsResponse": true,
+      "overflow": false
+    }
+  },
+  "controlledBrowserChecks": [
+    "mixed readiness, missing methods and availability errors",
+    "no create calls for downloadable/downloading/unavailable states",
+    "click-required creation and successful per-API retry",
+    "hostile output/error text cannot create HTML elements",
+    "downloaded JSON matches the completed snapshot (download intercepted in test tab)",
+    "all seven absent APIs complete explicitly",
+    "Stop cancels an operation and destroys its session",
+    "rerun returns to a completed snapshot",
+    "desktop and narrow layout inspected",
+    "390px emulation has no page overflow"
+  ],
+  "screenshots": "Reviewed locally under /tmp; not checked into repository."
+}
