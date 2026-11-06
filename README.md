@@ -12,6 +12,7 @@ Browser diagnostics by [ScrapeTrace](https://scrapetrace.com/) for inspecting wh
 | [/consistency/full](https://scrapetrace-checks.pages.dev/consistency/full) | Compares navigator properties and API availability across the same five contexts, including platform, languages and hardware concurrency. |
 | [/screen](https://scrapetrace-checks.pages.dev/screen) | Visualizes screen, available screen area, window and page dimensions, plus visual viewport differences and reported positioning. |
 | [/mobile](https://scrapetrace-checks.pages.dev/mobile) | Compares screen geometry, touch and pointer capabilities, User-Agent, platform and mobile client hints. Also compares document request headers with JavaScript readings. |
+| [/speech](https://scrapetrace-checks.pages.dev/speech) | Inspects speech synthesis interfaces, voice loading, repeated reads, page/frame consistency and a click-to-test utterance. |
 | [/ai](https://scrapetrace-checks.pages.dev/ai) | Checks seven built-in AI interfaces, availability, sample responses and session behavior using ready models. |
 | [/keyboard](https://scrapetrace-checks.pages.dev/keyboard) | Displays the keyboard layout map and compares every entry with the Chromium US fallback map. Highlights international keys and missing positions. |
 | [/battery](https://scrapetrace-checks.pages.dev/battery) | Observes Battery Status API readings and changes over a sampling window. |
@@ -29,7 +30,7 @@ A plain HTTP fetch returns the initial page, not browser measurements. For autom
 
 ### Completion signals
 
-For the AI, consistency, screen, mobile, keyboard, battery and environment checks, wait for:
+For the speech, AI, consistency, screen, mobile, keyboard, battery and environment checks, wait for:
 
 ```js
 await page.waitForSelector('#probe-complete[data-status="complete"]');
@@ -73,6 +74,7 @@ CHROME_PATH=/usr/bin/google-chrome npm run test:screen
 CHROME_PATH=/usr/bin/google-chrome npm run test:mobile
 CHROME_PATH=/usr/bin/google-chrome npm run test:keyboard
 npm run test:ai
+npm run test:speech
 ```
 
 Set `PUPPETEER_MODULE` to an existing Puppeteer Core ESM entry point if using an installation outside this repository. Browser verification includes controlled fixtures; these are functional tests, not provider measurements. Retained keyboard verification is in [verification/keyboard-layout-2026-11-03.json](verification/keyboard-layout-2026-11-03.json).
@@ -99,3 +101,9 @@ Source provenance and third-party notices are retained beside their implementati
 ## License
 
 New code is MIT licensed. Adapted code retains its upstream copyright and permission notices. Chromium reference data retains its [BSD notice](site/keyboard/CHROMIUM-LICENSE.txt); additional retained Chromium material is covered by [raw/CHROMIUM-LICENSE](raw/CHROMIUM-LICENSE). The locally hosted Inter font uses the [SIL Open Font License](site/shared/INTER-LICENSE.txt).
+
+## Speech and voice observations
+
+`/speech` separates API exposure, returned voices and optional utterance execution. Silent three-second collection records delayed loading, voice metadata, repeated reads and a fresh same-origin frame comparison. The voice table is searchable. Test voice runs only after a click, records start/end/error events and leaves an already busy queue alone. JSON and rendered HTML retain the readings. See [speech source notes](site/speech/SOURCES.md).
+
+Current speech verification is retained in [verification/speech-2026-11-06.json](verification/speech-2026-11-06.json), including native voice loading, page/frame comparison, a completed manual utterance, the unsupported-interface fixture and mobile layout review.

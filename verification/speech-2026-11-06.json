@@ -1,0 +1,42 @@
+{
+  "check": "speech",
+  "verifiedAt": "2026-11-06",
+  "environment": "Existing user Chrome session via DevTools autoConnect; local built Worker preview",
+  "providerCalls": 0,
+  "native": {
+    "interfacesExposed": 2,
+    "initialVoiceCount": 0,
+    "finalVoiceCount": 19,
+    "languages": 18,
+    "localVoices": 0,
+    "remoteVoices": 19,
+    "voiceschangedEvents": 1,
+    "pageFrameValues": "match",
+    "pageFrameOrder": "match",
+    "repeatedReads": "match",
+    "manualUtterance": {
+      "voice": "Google Deutsch",
+      "text": "Hello. This is the ScrapeTrace speech check.",
+      "status": "completed",
+      "startAtMs": 408,
+      "endAtMs": 4041
+    }
+  },
+  "ui": {
+    "desktop": "Visually reviewed",
+    "mobile": "Visually reviewed at 390 CSS px; no document overflow",
+    "filter": "en-US returned one of 19 voices",
+    "json": "Visible JSON equals the result object"
+  },
+  "controlledBrowserFixture": {
+    "missingBothInterfaces": "Page and frame not-exposed, comparison not-compared, speech disabled, completion true"
+  },
+  "automated": [
+    "Build passed",
+    "Speech collector: missing, incomplete, malformed, throwing, empty, delayed and unstable voice lists",
+    "Voice order compared separately from values; unavailable contexts not compared",
+    "Worker route assets, HEAD, POST, no-store and narrowly scoped frame CSP passed",
+    "Existing AI verification passed",
+    "git diff --check passed"
+  ]
+}
