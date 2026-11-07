@@ -15,13 +15,26 @@ try{
  assert.equal(await reader.$eval('#marker-result',e=>e.textContent),'BADC0FFE');assert.equal(await reader.$eval('#marker',e=>e.value),'BADC0FFE');assert.equal(await reader.$eval('#plant-url',e=>new URL(e.value).searchParams.get('marker')),'BADC0FFE');assert.equal(await reader.$eval('#integrity',e=>e.textContent),'Tag matched');assert.equal(await reader.$eval('#timings',e=>e.children.length),64);
  for(const width of [1440,768,390,320]){
   await reader.setViewport({width,height:1000});await reader.evaluate(()=>document.fonts.ready);assert(!await reader.evaluate(()=>document.documentElement.scrollWidth>innerWidth));assert(await reader.$eval('.checks-brand img',e=>e.naturalWidth>0));
-  await reader.$eval('.result',e=>e.scrollIntoView({block:'start'}));await reader.screenshot({path:path.join(output,'result-'+width+'.png')});report.checks.push('result layout fits '+width+'px');
+  await reader.$eval('.result',e=>e.scrollIntoView({block:'start'}));if(process.env.SKIP_SCREENSHOTS!=='1')await reader.screenshot({path:path.join(output,'result-'+width+'.png')});report.checks.push('result layout fits '+width+'px');
  }
  const exported=await reader.$eval('#report-json',e=>JSON.parse(e.textContent));assert.equal(exported.marker,recovered.marker);assert(exported.complete);assert.equal(await reader.$eval('#download',e=>e.disabled),false);report.checks.push('visible JSON/result/completion and enabled download agree');
+ const renewalNS='renewal_'+randomUUID().replaceAll('-','');
+ const initial=new URL('/shader-cache',server.url);initial.search=new URLSearchParams({mode:'plant',namespace:renewalNS,bank:'0',marker:'CAFE2026',autorun:'1'});
+ await reader.goto(initial.href);await reader.waitForSelector('#probe-complete[data-status="complete"]',{timeout:30000});assert.equal(await reader.evaluate(()=>window.__PROBE_RESULT__.status),'planted');
+ let renewURL=await reader.$eval('#renew-url',e=>e.value);report.renewalRuns=[];
+ for(let bank=0;bank<3;bank++){
+  assert.equal(new URL(renewURL).searchParams.get('mode'),'read-renew');assert.equal(new URL(renewURL).searchParams.get('bank'),String(bank));assert(!new URL(renewURL).searchParams.has('marker'));
+  const ctx=await browser.createBrowserContext(),p=await ctx.newPage();p.on('pageerror',e=>report.errors.push(e.message));await p.goto(renewURL);await p.waitForSelector('#probe-complete[data-status="complete"]',{timeout:60000});
+  const value=await p.evaluate(()=>window.__PROBE_RESULT__);assert.equal(value.status,'recovered');assert.equal(value.marker,'CAFE2026');assert.equal(value.renewal.status,'planted');assert.equal(value.renewal.nextBank,bank+1);assert.equal(value.renewal.result.marker,value.marker);assert.equal(await p.$eval('#bank',e=>e.value),String(bank+1));
+  report.renewalRuns.push(value);renewURL=await p.$eval('#renew-url',e=>e.value);assert((await p.$eval('#headline',e=>e.textContent)).includes('renewed'));await ctx.close();
+ }
+ const last=new URL(renewURL);last.searchParams.set('mode','read');await reader.goto(last.href);await reader.waitForSelector('#probe-complete[data-status="complete"]',{timeout:30000});assert.equal(await reader.evaluate(()=>window.__PROBE_RESULT__.marker),'CAFE2026');
+ report.checks.push('three autorun renewal requests across fresh contexts preserve marker and provide blind next-bank links; final plain reader validates last write');
+ const exhausted=new URL(renewURL);exhausted.searchParams.set('bank','63');await reader.goto(exhausted.href);await reader.waitForSelector('#probe-complete[data-status="complete"]');assert.equal(await reader.evaluate(()=>window.__PROBE_RESULT__.status),'invalid-input');report.checks.push('final-bank renewal rejected before consuming a record');
  const invalid=new URL('/shader-cache',server.url);invalid.search=new URLSearchParams({mode:'read',namespace:'invalid_control',marker:'12345678',autorun:'1'}).toString();await reader.goto(invalid.href);await reader.waitForSelector('#probe-complete[data-status="complete"]');assert.equal(await reader.evaluate(()=>window.__PROBE_RESULT__.status),'invalid-input');report.checks.push('reader rejects URL-carried expected marker');
  await reader.goto(server.url+'/shader-cache?mode=read&namespace=unsupported_case&autorun=1');await reader.waitForSelector('#probe-complete[data-status="complete"]');assert.equal(await reader.evaluate(()=>window.__PROBE_RESULT__.status),'no-valid-record');
  // Controlled API absence checks page-level completion, not actual GPU behavior.
  await reader.evaluateOnNewDocument(()=>{HTMLCanvasElement.prototype.getContext=function(kind){return kind==='webgl2'?null:null}});await reader.goto(server.url+'/shader-cache?mode=read&namespace=unsupported_case&autorun=1');await reader.waitForSelector('#probe-complete[data-status="complete"]');assert.equal(await reader.evaluate(()=>window.__PROBE_RESULT__.status),'unsupported');assert((await reader.$eval('#headline',e=>e.textContent)).includes('unavailable'));report.checks.push('unsupported WebGL still completes with an explicit outcome');
  await next.close();assert.deepEqual(report.errors,[]);report.browser=await browser.version();report.passed=true;
 }finally{await browser?.close();await server.close();await rm(scratch,{recursive:true,force:true});await writeFile(path.join(output,'ui-report.json'),JSON.stringify(report,null,2)+'\n')}
-console.log(JSON.stringify(report,null,2));
+console.log(JSON.stringify({...report,renewalRuns:report.renewalRuns?.map(r=>({bank:r.request.bank,marker:r.marker,status:r.status,renewal:r.renewal.status,nextBank:r.renewal.nextBank}))},null,2));

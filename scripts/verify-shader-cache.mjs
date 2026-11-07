@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {validate,checksum,decode,runMarker,PROTOCOL} from '../site/shader-cache/probe.js';
 import worker from '../dist/_worker.js';
+import {runOperation} from '../site/shader-cache/workflow.js';
 const ns='controlled_namespace';
 for(const input of [{mode:'track',namespace:ns},{mode:'read',namespace:'bad'},{mode:'read',namespace:ns,bank:-1},{mode:'read',namespace:ns,bank:64},{mode:'read',namespace:ns,bank:NaN},{mode:'read',namespace:ns,marker:'12345678'},{mode:'plant',namespace:ns,marker:'not_hex!'}])assert.throws(()=>validate(input));
 assert.deepEqual(validate({mode:'plant',namespace:ns,marker:'abcdef01'}),{mode:'plant',namespace:ns,bank:0,marker:'ABCDEF01'});
@@ -23,10 +24,24 @@ const gl={VERTEX_SHADER:1,FRAGMENT_SHADER:2,LINK_STATUS:3,ARRAY_BUFFER:4,STATIC_
 const uniform={performance:{now:()=>++time},crypto,document:{createElement:()=>({getContext:()=>gl,visibilityState:'visible'})},navigator:{userAgent:'controlled'},location:{origin:'https://test.local'},isSecureContext:true,setTimeout};
 const weak=await runMarker({mode:'plant',namespace:ns,marker:'12345678'},uniform);assert.equal(weak.status,'inconclusive');assert.equal(weak.calibration.usable,false);assert(!weak.record);assert(weak.complete&&lost&&deletes>0);
 const cancelled=await runMarker({mode:'read',namespace:ns},uniform,()=>{},AbortSignal.abort());assert.equal(cancelled.status,'cancelled');assert(cancelled.complete);
-for(const route of ['/shader-cache','/shader-cache/','/shader-cache/app.js','/shader-cache/probe.js','/shader-cache/style.css']){
+for(const route of ['/shader-cache','/shader-cache/','/shader-cache/app.js','/shader-cache/probe.js','/shader-cache/workflow.js','/shader-cache/style.css']){
  const response=await worker.fetch(new Request('https://test.local'+route));assert.equal(response.status,200);assert.equal(response.headers.get('cache-control'),'no-store');assert.equal(await(await worker.fetch(new Request('https://test.local'+route,{method:'HEAD'}))).text(),'');assert.equal((await worker.fetch(new Request('https://test.local'+route,{method:'POST'}))).status,405);
  assert(response.headers.get('content-security-policy').includes("connect-src 'none'"));
 }
 const html=await(await worker.fetch(new Request('https://test.local/shader-cache'))).text();assert(html.includes('Reader URL'));assert(!html.includes('%%'));assert(!html.includes('id="probe-complete"'));
 const home=await(await worker.fetch(new Request('https://test.local/'))).text();assert(home.includes('12 tools / ready to run'));assert(home.includes('href="/shader-cache"'));
 console.log(PROTOCOL+': passed input boundaries, blind-reader requirement, payload/tag corruption, ties, bank/namespace binding, unsupported/weak/cancelled cleanup, built routes and CSP.');
+
+// Failed recovery must not silently plant a replacement.
+for(const status of ['no-valid-record','inconclusive','unsupported','cancelled','error']){
+ const calls=[];const value=await runOperation({mode:'read-renew',namespace:ns,bank:0},globalThis,()=>{},undefined,async o=>{calls.push(o);return{status,complete:true,programsMeasured:12}});assert.equal(calls.length,1);assert.equal(value.renewal.status,'skipped');assert.equal(value.status,status);
+}
+for(const status of ['planted','inconclusive','cancelled','error']){
+ const calls=[];const value=await runOperation({mode:'read-renew',namespace:ns,bank:5},globalThis,()=>{},undefined,async o=>{calls.push(o);return calls.length===1?{status:'recovered',marker:'89ABCDEF',programsMeasured:141}:{status,programsMeasured:77}});
+ assert.deepEqual(calls,[{mode:'read',namespace:ns,bank:5},{mode:'plant',namespace:ns,bank:6,marker:'89ABCDEF'}]);assert.equal(value.status,'recovered');assert.equal(value.renewal.status,status);assert.equal(value.totalProgramsMeasured,218);
+}
+for(const options of [{bank:63},{bank:64},{bank:NaN},{bank:0,marker:'89ABCDEF'}]){
+ let called=false;const value=await runOperation({mode:'read-renew',namespace:ns,...options},globalThis,()=>{},undefined,async()=>{called=true});assert.equal(value.status,'invalid-input');assert(!called);
+}
+const aborter=new AbortController();const calls=[];const aborted=await runOperation({mode:'read-renew',namespace:ns,bank:0},globalThis,()=>{},aborter.signal,async o=>{calls.push(o);aborter.abort();return{status:'recovered',marker:'12345678'}});assert.equal(calls.length,1);assert.equal(aborted.renewal.status,'cancelled');
+console.log('Read-and-renew: success, failed recovery, failed renewal, cancellation, blind input and final-bank boundaries passed.');

@@ -76,7 +76,7 @@ for(const file of ['app.js','probe.js','frame.js','style.css']){
 }
 
 assets['/shader-cache']={type:'text/html',body:(await read('site/shader-cache/index.html')).replace('%%SHARED_HEADER%%',header).replace('%%SHARED_FOOTER%%',footer)};
-for(const file of ['app.js','probe.js','style.css']){
+for(const file of ['app.js','probe.js','workflow.js','style.css']){
  assets['/shader-cache/'+file]={type:file.endsWith('.css')?'text/css':'application/javascript',body:await read('site/shader-cache/'+file)};
 }
 

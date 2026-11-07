@@ -1,0 +1,29 @@
+{
+  "kind": "functional-renewal-QA-not-new-controlled-matrix",
+  "rawSHA256": "a2a49f28977ec7283fe4f2752a0bcc62c31d5d6af29a99d06960bd67a1d14300",
+  "browser": "Chrome/157.0.8103.38",
+  "renewals": 3,
+  "marker": "CAFE2026",
+  "banks": "0 \u2192 1 \u2192 2 \u2192 3; final plain read verified bank 3",
+  "validatedDraws": 648,
+  "checks": [
+    "default page performs no marker operation",
+    "manual writer -> generated blind-reader URL -> matching marker in a new context",
+    "result layout fits 1440px",
+    "result layout fits 768px",
+    "result layout fits 390px",
+    "result layout fits 320px",
+    "visible JSON/result/completion and enabled download agree",
+    "three autorun renewal requests across fresh contexts preserve marker and provide blind next-bank links; final plain reader validates last write",
+    "final-bank renewal rejected before consuming a record",
+    "reader rejects URL-carried expected marker",
+    "unsupported WebGL still completes with an explicit outcome"
+  ],
+  "sourceHashes": {
+    "probe.js": "e1c21ea5f66a967403cd4533fa5755f0962db5c1292e10d2b1419fb483879543",
+    "workflow.js": "030ddca9cf44bab1c1746b3195ebdf7cc81a6d207385cc8a38f781b76a8d840d",
+    "app.js": "556a330f9ef29da32feaf7ddaa9f284de5cb870364c70d19643309a08849e42c",
+    "index.html": "0f0b400cdfcb8e53686cc36b66d05b1d22b801d771ba995d6bfdd0751e8f01bc"
+  },
+  "scope": "Local functional QA only; no provider measurement or live deployment. Screenshot compositor stalled in an earlier retained attempt. Successful run checked DOM layout at four widths with captures disabled."
+}
