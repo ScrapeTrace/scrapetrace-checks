@@ -17,5 +17,5 @@ for(const path of ['/speech','/speech/','/speech/frame','/speech/app.js','/speec
 }
 const response=await worker.fetch(new Request('https://test.local/speech'));assert(response.headers.get('content-security-policy').includes("frame-src 'self'"));assert(response.headers.get('content-security-policy').includes("frame-ancestors 'none'"));assert((await worker.fetch(new Request('https://test.local/speech/frame'))).headers.get('content-security-policy').includes("frame-ancestors 'self'"));
 const html=await response.text();assert(!html.includes('%%'));assert(!html.includes('id="probe-complete"'));assert(html.includes('Not measured yet'));
-const hub=await (await worker.fetch(new Request('https://test.local/'))).text();assert(hub.includes('11 tools / ready to run'));assert(hub.includes('href="/speech"'));
+const hub=await (await worker.fetch(new Request('https://test.local/'))).text();assert(hub.includes('12 tools / ready to run'));assert(hub.includes('href="/speech"'));
 console.log('Speech collector and Worker checks passed: missing/incomplete/error/empty/delayed/unstable voices, order, comparison, routes and frame CSP.');

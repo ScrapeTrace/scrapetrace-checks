@@ -1,0 +1,47 @@
+{
+  "collected": "2026-11-07",
+  "setup": "One Linux host, headed Chrome, dedicated browser profiles/task-private Mesa cache; launcher partition-disabling override removed",
+  "checks": {
+    "fresh-context": {
+      "records": 3,
+      "recoveredExact": 3,
+      "noValidRecord": 0,
+      "secondReadsInvalid": 3
+    },
+    "unwritten": {
+      "records": 3,
+      "recoveredExact": 0,
+      "noValidRecord": 3,
+      "secondReadsInvalid": 0
+    },
+    "fresh-profile": {
+      "records": 3,
+      "recoveredExact": 0,
+      "noValidRecord": 3,
+      "secondReadsInvalid": 0
+    }
+  },
+  "sourceSHA256": "e1c21ea5f66a967403cd4533fa5755f0962db5c1292e10d2b1419fb483879543",
+  "browser": "Chrome/157.0.8103.38",
+  "renderer": "ANGLE (AMD, AMD Radeon 890M Graphics (radeonsi gfx1150 LLVM 20.1.2), OpenGL ES 3.2)",
+  "validatedRecordedDraws": 2136,
+  "interpretation": "Controlled marker transfer across fresh contexts works on this setup. Reader contains no expected marker. No provider calls or universal isolation claim.",
+  "qa": {
+    "kind": "functional-browser-QA-not-provider-measurement",
+    "checks": [
+      "default page performs no marker operation",
+      "manual writer -> generated blind-reader URL -> matching marker in a new context",
+      "result layout fits 1440px",
+      "result layout fits 768px",
+      "result layout fits 390px",
+      "result layout fits 320px",
+      "visible JSON/result/completion and enabled download agree",
+      "reader rejects URL-carried expected marker",
+      "unsupported WebGL still completes with an explicit outcome"
+    ],
+    "errors": [],
+    "browser": "Chrome/157.0.8103.38",
+    "passed": true
+  },
+  "scope": "Controlled local functional verification. No provider evaluations. No population accuracy, hardware identity or physical-cache attribution."
+}

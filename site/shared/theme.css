@@ -14,3 +14,6 @@ button,.button{border:1px solid var(--accent);border-radius:0;background:var(--a
 @media(max-width:760px){main{padding:38px 22px 60px}.checks-header-inner{padding:8px 22px 20px;min-height:0}.checks-brand img{width:210px;height:70px}.checks-nav{justify-content:flex-start;gap:12px 20px;flex-wrap:wrap;font-size:.8rem}.checks-nav .main-site{padding-left:0;border-left:0}.cards,.grid{grid-template-columns:1fr}.checks-footer{margin:0 22px;grid-template-columns:1fr;padding-block:28px}.checks-footer-links{justify-content:flex-start;flex-wrap:wrap;gap:20px}.checks-incognito .metrics{grid-template-columns:1fr;padding:20px}.checks-incognito .metrics strong{font-size:1.6rem}.checks-incognito .controls label{width:100%}.checks-incognito select{width:100%}.checks-incognito .intro h1{font-size:2.5rem}.checks-incognito aside{padding:18px}.checks-label{font-size:.6rem}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 svg.chart #trace{stroke:var(--accent)}svg.chart>path{stroke:var(--line)}
+
+/* Keep the growing tool navigation within its container at every width. */
+.checks-header-inner{flex-wrap:wrap;padding-bottom:20px}.checks-nav{flex:1 1 100%;flex-wrap:wrap;row-gap:12px}

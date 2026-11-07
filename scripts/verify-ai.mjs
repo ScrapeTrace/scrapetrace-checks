@@ -60,6 +60,6 @@ for(const path of ['/ai','/ai/','/ai/app.js','/ai/probe.js','/ai/style.css']){
  assert.equal((await worker.fetch(new Request('https://test.local'+path,{method:'POST'}))).status,405);
 }
 const html=await (await worker.fetch(new Request('https://test.local/ai'))).text();assert(!html.includes('%%'));assert(html.includes('Not measured yet'));assert(!html.includes('id="probe-complete"'));assert(html.includes('/ai/app.js'));
-const hub=await (await worker.fetch(new Request('https://test.local/'))).text();assert(hub.includes('11 tools / ready to run'));assert(hub.includes('href="/ai"'));
+const hub=await (await worker.fetch(new Request('https://test.local/'))).text();assert(hub.includes('12 tools / ready to run'));assert(hub.includes('href="/ai"'));
 checks.push('new route, assets, HEAD/POST behavior, no initial measurement and hub/navigation integration');
 console.log(checks.join('\n')+'\nPassed '+checks.length+' groups. Browser/UI verification is separate.');

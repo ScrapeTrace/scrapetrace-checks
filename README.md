@@ -8,6 +8,7 @@ Browser diagnostics by [ScrapeTrace](https://scrapetrace.com/) for inspecting wh
 
 | Page | What it shows |
 | --- | --- |
+| [/shader-cache](https://scrapetrace-checks.pages.dev/shader-cache) | Plants a controlled marker in WebGL compilation state and attempts recovery in a separate browser context, with calibration and integrity checks. |
 | [/consistency](https://scrapetrace-checks.pages.dev/consistency) | Compares User-Agents across the page, an iframe, and dedicated, shared and service workers. Shows a headless notice when a returned string contains that marker. |
 | [/consistency/full](https://scrapetrace-checks.pages.dev/consistency/full) | Compares navigator properties and API availability across the same five contexts, including platform, languages and hardware concurrency. |
 | [/screen](https://scrapetrace-checks.pages.dev/screen) | Visualizes screen, available screen area, window and page dimensions, plus visual viewport differences and reported positioning. |
@@ -30,7 +31,7 @@ A plain HTTP fetch returns the initial page, not browser measurements. For autom
 
 ### Completion signals
 
-For the speech, AI, consistency, screen, mobile, keyboard, battery and environment checks, wait for:
+For the shader-cache, speech, AI, consistency, screen, mobile, keyboard, battery and environment checks, wait for:
 
 ```js
 await page.waitForSelector('#probe-complete[data-status="complete"]');
@@ -39,6 +40,7 @@ const result = await page.evaluate(() => window.__PROBE_RESULT__);
 
 The pages also expose `window.__PROBE_READY__`, `html[data-probe-ready="true"]` and the `probe:ready` document event. Completion can include an explicit unsupported, failed or timed-out result; inspect the reported status.
 
+- **Shader cache:** manual by default. Use the page-generated planter and blind-reader URLs for automatic provider runs. Run the planter first, then the reader in a new context. Allow up to 30 seconds and inspect the result status; a completed run may be inconclusive, unsupported or invalid. Reading warms both candidates. New independent tests need a fresh namespace or bank.
 - **Built-in AI:** runs asynchronously and tries only APIs whose `availability()` returns `available`. Navigation load alone is insufficient. Allow at least 75 seconds for the completion marker. No session is started for downloadable, downloading, unavailable or unknown states. The page has per-API click retries, a Stop button, sample output and local JSON export.
 - **Consistency:** collection is asynchronous across five contexts, so navigation load alone is insufficient. Each context has a 10-second deadline. Full mode inventories properties and passive getter values; it does not invoke the methods it lists.
 - **Screen:** readings update live on resize and window movement. Use **Freeze readings** to retain a snapshot, or read the result immediately after completion.
@@ -75,6 +77,8 @@ CHROME_PATH=/usr/bin/google-chrome npm run test:mobile
 CHROME_PATH=/usr/bin/google-chrome npm run test:keyboard
 npm run test:ai
 npm run test:speech
+npm run test:shader-cache
+HEADED=1 CHROME_PATH=/opt/google/chrome/chrome npm run test:shader-cache:browser
 ```
 
 Set `PUPPETEER_MODULE` to an existing Puppeteer Core ESM entry point if using an installation outside this repository. Browser verification includes controlled fixtures; these are functional tests, not provider measurements. Retained keyboard verification is in [verification/keyboard-layout-2026-11-03.json](verification/keyboard-layout-2026-11-03.json).
@@ -107,3 +111,20 @@ New code is MIT licensed. Adapted code retains its upstream copyright and permis
 `/speech` separates API exposure, returned voices and optional utterance execution. Silent three-second collection records delayed loading, voice metadata, repeated reads and a fresh same-origin frame comparison. The voice table is searchable. Test voice runs only after a click, records start/end/error events and leaves an already busy queue alone. JSON and rendered HTML retain the readings. See [speech source notes](site/speech/SOURCES.md).
 
 Current speech verification is retained in [verification/speech-2026-11-06.json](verification/speech-2026-11-06.json), including native voice loading, page/frame comparison, a completed manual utterance, the unsupported-interface fixture and mobile layout review.
+
+## Shader-cache marker check
+
+`/shader-cache` has explicit planter and reader roles. Choose a namespace, bank 0–63 and eight-hex-character marker. Plant first, then open the generated reader URL in another context or browser/provider session. The reader URL carries namespace and bank only. It receives no expected marker. A successful read requires a matching 32-bit integrity tag and no tied candidate timings.
+
+For automation, use JavaScript rendering and these URL parameters:
+
+```text
+/shader-cache?mode=plant&namespace=YOUR_RANDOM_TEST_NAMESPACE&bank=0&marker=89ABCDEF&autorun=1
+/shader-cache?mode=read&namespace=YOUR_RANDOM_TEST_NAMESPACE&bank=0&autorun=1
+```
+
+Wait for `#probe-complete[data-status="complete"]` and inspect `window.__PROBE_RESULT__`. `planted` confirms the writer workload completed. `recovered` means a candidate passed the integrity check. Other outcomes include `no-valid-record`, `inconclusive`, `unsupported`, `invalid-input`, `cancelled` and `error`. A reader URL containing `marker` is rejected. No automatic visitor ID, generation scan or marker renewal is used. Use random test payloads rather than personal information in URLs.
+
+Readings and program timing/draw records are available in page JSON and a local download. They are not uploaded to a result service. The hosting service still sees URL requests. Reading compiles both candidates and consumes the contrast; each independent test needs a fresh bank/namespace. Concurrent requests against the same bank can affect one another. A failed read can also reflect routing to another worker or graphics stack, so it is not a universal provider-isolation verdict.
+
+Local verification on 7 November 2026: three fresh-context readers recovered the planted marker exactly; all three destructive rereads, three unwritten controls and three new-profile/new-process controls returned no valid marker. One headed Chrome 157/Linux/AMD setup, no provider calls. [Functional verification](verification/shader-cache-2026-11-07.json) distinguishes these trials from UI tests. See [source and protocol notes](site/shader-cache/SOURCES.md). These observations do not locate the physical cache layer.
